@@ -45,7 +45,8 @@
 			</song-box>
 			<br>
 			<?php
-				iterate_dir('./media');
+                $MEDIA_DIR = './media';
+				iterate_dir($MEDIA_DIR . '');
 				
 				function iterate_dir($dir) {
                     $root = $dir;
@@ -57,7 +58,7 @@
 								if(strpos($file, '.') == 0) {
 									iterate_dir($href);
                                 } else {
-                                    build_box($file, str_replace('./media', '', $href));
+                                    build_box($file, str_replace($MEDIA_DIR, '', $href));
                                 }
 						}	
 					}
@@ -68,7 +69,7 @@
 					$artist = $tokens[0]; // TODO change to proper id3
 					$name = $tokens[1];
 					$length = '1:23'; // TODO Fix >_>
-					$img_url = 'http://10.0.0.32:8192/api/v1/art.php?file=' . $href;
+					$img_url = $_SERVER["HTTP_HOST"] . '/api/v1/art.php?file=' . $href;
 					
 					echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
 				}
