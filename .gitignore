@@ -5,6 +5,7 @@
 *.mp3
 *.wav
 *.flac
+!sample.*
 
 ##
 # Cache ignores
