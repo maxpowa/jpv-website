@@ -45,7 +45,7 @@
 			</song-box>
 			<br>
 			<?php
-                $MEDIA_DIR = './media';
+                $MEDIA_DIR = './media/';
 				iterate_dir($MEDIA_DIR . '');
 				
 				function iterate_dir($dir) {
