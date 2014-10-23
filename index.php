@@ -5,7 +5,7 @@
 
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		
-		<script src="/components/platform/platform.js"></script>
+		<script src="/bower_components/webcomponents.js/webcomponents.js"></script>
         
         <link rel="import" href="bower_components/core-ajax/core-ajax.html">
 		<link rel="import" href="bower_components/font-roboto/roboto.html">
