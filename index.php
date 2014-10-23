@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		
 		<script src="/components/platform/platform.js"></script>
-		
+        
+        <link rel="import" href="components/core-ajax/core-ajax.html">
 		<link rel="import" href="components/font-roboto/roboto.html">
 		<link rel="import" href="components/core-header-panel/core-header-panel.html">
 		<link rel="import" href="components/core-toolbar/core-toolbar.html">
@@ -19,6 +20,9 @@
 	</head>
 
 	<body unresolved>
+        <core-ajax url="//localhost:8192/api/v1/list.php"
+               handleAs="json"></core-ajax>
+    
 		<core-header-panel>
 			<core-toolbar>
 				<paper-tabs id="toolbar-tabs" selected="home" self-end>
@@ -41,7 +45,7 @@
 			</song-box>
 			<br>
 			<?php
-				iterate_dir('.');
+				iterate_dir('./media');
 				
 				function iterate_dir($dir) {
 					$files = scandir($dir);
@@ -74,6 +78,18 @@
 			tabs.addEventListener('core-select', function(e) {
 				console.log("Selected: " + tabs.selected);
 			});
+            
+            // Wait for 'polymer-ready'. Ensures the element is upgraded.
+            window.addEventListener('polymer-ready', function(e) {
+              var ajax = document.querySelector('core-ajax');
+
+              // Respond to events it fires.
+              ajax.addEventListener('core-response', function(e) {
+                console.log(this.response);
+              });
+
+              ajax.go(); // Call its API methods.
+            });
 		</script>
 	</body>
 </html>
