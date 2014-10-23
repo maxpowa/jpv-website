@@ -1,0 +1,80 @@
+<link rel="import" href="components/polymer/polymer.html">
+<link rel="import" href="components/core-icon-button/core-icon-button.html">
+<link rel="import" href="components/core-icons/av-icons.html">
+
+<polymer-element name="song-box">
+	<template>
+		<style>
+			:host {
+				display: block;
+				position: relative;
+				background-color: white;
+				box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+				padding: 20px;
+				width: 100%;
+				font-size: 1.2rem;
+				font-weight: 300;
+			}
+			
+			.song-header {
+				margin-bottom: 10px;
+			}
+
+			polyfill-next-selector { content: '.song-header div h1'; }
+			.song-header ::content div h1 {
+				margin: 0;
+				font-size: 1.8rem;
+				font-weight: 300;
+				z-index: 2;
+			}
+			
+			polyfill-next-selector { content: '.song-header div h2'; }
+			.song-header ::content div h2 {
+				margin: 0;
+				font-size: 1.2rem;
+				font-weight: 300;
+				z-index: 2;
+			}
+			
+			polyfill-next-selector { content: '.song-header div h3'; }
+			.song-header ::content div h3 {
+				margin: 0;
+				font-size: 1rem;
+				font-weight: 200;
+				z-index: 2;
+			}
+			
+			polyfill-next-selector { content: '.song-header img'; }
+			.song-header ::content img {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				margin: 10px;
+			}
+			
+			#buttons {
+				position: absolute;	
+				top: calc(100% - 45px);
+				right: 3px;
+				color: #636363;
+			}
+
+		</style>
+		
+		<div class="song-header" layout horizontal center>
+			<content select="img"></content>
+			<content select="div"></content>
+		</div>
+	
+		<div id="buttons">
+			<core-icon-button icon="file-download"></core-icon-button>
+			<core-icon-button icon="av:play-arrow"></core-icon-button>
+		</div>
+		
+		<content></content>
+	</template>
+	
+	<script>
+		Polymer({});
+	</script>
+</polymer-element>

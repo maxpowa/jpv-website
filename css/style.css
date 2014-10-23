@@ -1,0 +1,57 @@
+/* 
+ * http://www.google.com/design/spec/style/color.html#color-ui-color-palette 
+ * Primary - Pink
+ *   500 - #e91e63
+ *   100 - #f8bbd0
+ *   500 - #d81b60
+ *   700 - #c2185b
+ *
+ * Accent - Indigo
+ *   A200 - #536dfe
+ *   Fallback
+ *   A100 - #8c9eff
+ *   A400 - #3d5afe
+*/
+
+html, body {
+	height: 100%;
+	margin: 0;
+	background-color: #e5e5e5;
+	font-family: 'RobotoDraft', sans-serif;
+}
+
+.container {
+	width: 100%;
+	margin: 50px auto;
+}
+
+core-header-panel {
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch; 
+}
+
+core-toolbar {
+	background: #e91e63;
+	color: white;
+}
+
+#toolbar-tabs {
+  width: 100%;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+@media (min-width: 481px) {
+	#toolbar-tabs {
+		width: 450px;
+	}
+
+	.container {
+		width: 400px;
+	}
+}
