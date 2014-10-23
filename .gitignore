@@ -1,4 +1,10 @@
 ##
+# Web ignores
+##
+
+npm-debug.log
+
+##
 # Audio ignores
 ##
 
