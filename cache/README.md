@@ -1,0 +1,1 @@
+This folder must allow read/write access to PHP
