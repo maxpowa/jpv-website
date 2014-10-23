@@ -1,6 +1,11 @@
 <?php
     /////////////////////////////////////////////////////////////////////
-    // art.php - fetches album art from given file (internal use only) //
+    // art.php - fetches album art from given file in ../../media/     //
+    // Request Scheme:                                                 //
+    //   GET /api/v1/art.php?file={filename}                           //
+    //   {filename} is a file in ../../media/                          //
+    // Response:                                                       //
+    //   Image Data corresponding to the requested file's art          //
     /////////////////////////////////////////////////////////////////////
     
     # Requires getid3() lib
