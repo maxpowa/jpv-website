@@ -1,6 +1,10 @@
 <?php
     /////////////////////////////////////////////////////////////////////
     // art.php - fetches album art from given file in ../../media/     //
+    // Requires PHP5-GD for caching                                    //
+    //   Caching uses MD5 as the identifier, so any change to a file   //
+    //   will cause a new cache image to be created.                   //
+    //                                                                 //
     // Request Scheme:                                                 //
     //   GET /api/v1/art.php?file={filename}                           //
     //   {filename} is a file in ../../media/                          //
@@ -10,6 +14,8 @@
     
     # Requires getid3() lib
     require_once('../../getid3/getid3.php');
+    
+    //TODO: Move these to a config file
     $MEDIA_DIR = '../../media/';
     $CACHE_DIR = '../../cache/';
     
@@ -25,9 +31,6 @@
             $size= filesize( $CACHE_FILE );
             header("Content-Length: $size bytes");
             readfile( $CACHE_FILE );
-            
-            #Debug
-            #file_put_contents('debug.txt','Fetched cached image', FILE_APPEND);
         } else {
             $getID3 = new getID3;
             #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
@@ -50,9 +53,6 @@
                 // or null; depends on your needs 
             }
             
-            #Debug
-            #file_put_contents('debug.txt','Got image from tags', FILE_APPEND);
-            
             if (!is_null($cover)) {
                 // Send file 
                 header("Content-Type: " . $mimetype);
@@ -61,17 +61,15 @@
                     header("Content-Length: " . $getID3->info['id3v2']['APIC'][0]['image_bytes']);
                 }
 
-                echo($cover);
+                echo($cover); # Send the image data to the client
                 
-                # Create a cache image, because it didn't exist
-                $img = imagecreatefromstring($cover);
-                # Save the image to disk, for later retrieval
-                imagegif($img, $CACHE_FILE);
-                # Destroy the image object to free up mem
-                imagedestroy($img);
-                
-                #Debug
-                #file_put_contents('debug.txt','Saved image to disk', FILE_APPEND);
+                # Check if GD is loaded before attempting to save the cache image
+                if (extension_loaded('gd') && function_exists('imagecreatefromstring')) {
+                    $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
+                    imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
+                    imagedestroy($img); # Destroy the image object to free up mem
+                }
+                # If GD isn't loaded, we can just pull from the id3 tags every time
             } else {
                 header("Content-Type: image/png");
                 header("Content-Length: 1249 bytes");
