@@ -7,11 +7,11 @@
 		
 		<script src="/components/platform/platform.js"></script>
         
-        <link rel="import" href="components/core-ajax/core-ajax.html">
-		<link rel="import" href="components/font-roboto/roboto.html">
-		<link rel="import" href="components/core-header-panel/core-header-panel.html">
-		<link rel="import" href="components/core-toolbar/core-toolbar.html">
-		<link rel="import" href="components/paper-tabs/paper-tabs.html">
+        <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+		<link rel="import" href="bower_components/font-roboto/roboto.html">
+		<link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+		<link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
 		
 		<link rel="import" href="elements/song-box.html">
 		<link rel="import" href="elements/post-card.html">
