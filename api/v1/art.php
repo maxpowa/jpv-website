@@ -5,7 +5,7 @@
     
     # Requires getid3() lib
     require_once('../../getid3/getid3.php');
-    $MEDIA_DIR = '../../media_objects/';
+    $MEDIA_DIR = '../../media/';
     $CACHE_DIR = '../../cache/';
     
     if ( isset( $_GET[ 'file' ] ) ) {
