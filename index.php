@@ -48,6 +48,7 @@
 				iterate_dir('./media');
 				
 				function iterate_dir($dir) {
+                    $root = $dir;
 					$files = scandir($dir);
 					sort($files);
 					foreach($files as $file) {
@@ -55,7 +56,9 @@
 								$href = "$dir/$file";
 								if(strpos($file, '.') == 0) {
 									iterate_dir($href);
-							} else build_box($file, $href);
+                                } else {
+                                    build_box($file, str_replace('./media', '', $href);
+                                }
 						}	
 					}
 				}
