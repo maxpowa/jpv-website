@@ -65,7 +65,7 @@
 					$artist = $tokens[0]; // TODO change to proper id3
 					$name = $tokens[1];
 					$length = '1:23'; // TODO Fix >_>
-					$img_url = 'http://i2.kym-cdn.com/entries/icons/original/000/001/030/dickbutt.jpg';
+					$img_url = 'http://10.0.0.32:8192/api/v1/art.php?file=' . $name;
 					
 					echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
 				}
