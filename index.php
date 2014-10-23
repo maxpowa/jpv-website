@@ -49,7 +49,7 @@
 				iterate_dir($MEDIA_DIR . '');
 				
 				function iterate_dir($dir) {
-                    $root = $dir;
+                    global $MEDIA_DIR;
 					$files = scandir($dir);
 					sort($files);
 					foreach($files as $file) {
@@ -58,7 +58,7 @@
 								if(strpos($file, '.') == 0) {
 									iterate_dir($href);
                                 } else {
-                                    build_box($file, str_replace($MEDIA_DIR, '', $href));
+                                    build_box($file, str_replace( $MEDIA_DIR , '' , $href ) );
                                 }
 						}	
 					}
