@@ -57,7 +57,7 @@
 								if(strpos($file, '.') == 0) {
 									iterate_dir($href);
                                 } else {
-                                    build_box($file, str_replace('./media', '', $href);
+                                    build_box($file, str_replace('./media', '', $href));
                                 }
 						}	
 					}
