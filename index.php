@@ -45,7 +45,7 @@
 			</song-box>
 			<br>
 			<?php
-                $MEDIA_DIR = './media/';
+                $MEDIA_DIR = './media';
 				iterate_dir($MEDIA_DIR . '');
 				
 				function iterate_dir($dir) {
@@ -58,7 +58,7 @@
 								if(strpos($file, '.') == 0) {
 									iterate_dir($href);
                                 } else {
-                                    build_box($file, str_replace( $MEDIA_DIR , '' , $href ) );
+                                    build_box($file, str_replace( $MEDIA_DIR . '/' , '' , $href ) );
                                 }
 						}	
 					}
