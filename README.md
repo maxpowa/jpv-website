@@ -1,4 +1,4 @@
-jpv-site
+The source of http://jpv.everythingisawesome.us
 ========
 
-Github Repo for http://jpv.everythingisawesome.us
+Feel free to help out and make the site better!
