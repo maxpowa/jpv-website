@@ -69,7 +69,7 @@
 					$artist = $tokens[0]; // TODO change to proper id3
 					$name = $tokens[1];
 					$length = '1:23'; // TODO Fix >_>
-					$img_url = $_SERVER["HTTP_HOST"] . '/api/v1/art.php?file=' . $href;
+					$img_url = '//' . $_SERVER["HTTP_HOST"] . '/api/v1/art.php?file=' . $href;
 					
 					echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
 				}
