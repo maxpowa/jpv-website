@@ -85,7 +85,7 @@
 	
 	<script>
 		Polymer('song-box', {
-            icon: "av:play-arrow";
+            icon: "av:play-arrow",
             onClick: function() {
                 document.querySelector('song-box').icon = 'av:pause';
                 this.fire('play', {title: 'song name'});
