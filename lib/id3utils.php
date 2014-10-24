@@ -100,7 +100,7 @@
               "message": "request successful"
             }**/
             header('Content-Type: application/json');
-            $output = "{\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"html_page\":\"http://jpv.everythingisawesome.us/song/$file\",\"download_url\":\"http://jpv.everythingisawesome.us/$file\",\"status\":\"200\",\"message\":\"request successful\"}" ;
+            $output = "{\"md5\":\"$FILE_MD5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"html_page\":\"http://jpv.everythingisawesome.us/song/$file\",\"download_url\":\"http://jpv.everythingisawesome.us/$file\",\"status\":\"200\",\"message\":\"request successful\"}" ;
             file_put_contents( $CACHE_FILE , $output );
             return $CACHE_FILE ;
         }

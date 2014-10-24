@@ -39,6 +39,8 @@
         }
     }
     
+    $RESPONSE_LIST = array();
+    
     function cache_check($genre) {
         $CACHED_LIST = CACHE_DIR . $genre . '.json';
         if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
@@ -72,17 +74,18 @@
         sort($files);
         foreach($files as $file) {
             if(strlen($file) > 2 && (strpos($file, '.mp3') != 0 || strpos($file, '.') == 0)) {
-                    $href = "$dir/$file";
-                    if(strpos($file, '.') == 0) {
-                        iterate_dir($href);
+                $href = "$dir/$file";
+                if(strpos($file, '.') == 0) {
+                    iterate_dir($href);
                 } else {
                     build_json($file, str_replace( MEDIA_DIR , '' , $href ));
                 }
             }	
         }
+        print_r($RESPONSE_LIST);
     }
     
     function build_json($filename, $rel_path) {
         $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
-		echo file_get_contents($INFO_FILE);
+		$RESPONSE_LIST[] = file_get_contents($INFO_FILE);
 	}
