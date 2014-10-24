@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 
 <polymer-element name="song-box">
@@ -76,13 +77,17 @@
 	
 		<div id="buttons">
 			<paper-icon-button class="hover" icon="file-download"></paper-icon-button>
-			<paper-icon-button class="hover" icon="av:play-arrow"></paper-icon-button>
+			<paper-icon-button class="hover" icon="av:play-arrow" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
 		<content></content>
 	</template>
 	
 	<script>
-		Polymer({});
+		Polymer('song-box', {
+            onClick: function() {
+                this.fire('play', {title: 'song name'});
+            }
+        });
 	</script>
 </polymer-element>
