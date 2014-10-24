@@ -77,7 +77,7 @@
 	
 		<div id="buttons">
 			<paper-icon-button class="hover" icon="file-download"></paper-icon-button>
-			<paper-icon-button id="control" class="hover" icon="av:play-arrow" onclick="{{onClick}}"></paper-icon-button>
+			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
 		<content></content>
@@ -85,8 +85,9 @@
 	
 	<script>
 		Polymer('song-box', {
+            icon: "av:play-arrow";
             onClick: function() {
-                document.getElementById("control").icon = "av:pause";
+                document.querySelector('song-box').icon = 'av:pause';
                 this.fire('play', {title: 'song name'});
             }
         });
