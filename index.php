@@ -11,6 +11,7 @@
 		<link rel="import" href="bower_components/font-roboto/roboto.html">
 		<link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
 		<link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+		<link rel="import" href="bower_components/core-tooltip/core-tooltip.html">
 		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
 		
 		<link rel="import" href="elements/song-box.html">
