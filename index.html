@@ -38,8 +38,7 @@
 	</head>
 
 	<body unresolved>
-        <core-ajax auto url="/api/v1/list.php" 
-            params='{"genre":"{{genre}}"}'
+        <core-ajax auto url="/api/v1/list.php?genre=all" 
             handleAs="json"></core-ajax>
       
 		<core-header-panel>
