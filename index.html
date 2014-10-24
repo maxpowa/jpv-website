@@ -5,7 +5,7 @@
 
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		
-		<script src="/bower_components/webcomponents.js/webcomponents.js"></script>
+		<script src="bower_components/webcomponents.js/webcomponents.js"></script>
         
         <link rel="import" href="bower_components/core-ajax/core-ajax.html">
 		<link rel="import" href="bower_components/font-roboto/roboto.html">
@@ -15,6 +15,7 @@
 		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
 		
 		<link rel="import" href="elements/song-box.html">
+		<link rel="import" href="elements/song-list.html">
 		<link rel="import" href="elements/post-card.html">
 
 		<link rel="stylesheet" href="css/style.css">
@@ -38,8 +39,6 @@
 	</head>
 
 	<body unresolved>
-        <core-ajax url="//localhost:8192/api/v1/list.php"
-               handleAs="json"></core-ajax>
     
 		<core-header-panel>
 			<core-toolbar>
@@ -63,36 +62,7 @@
 				</div>
 			</song-box>
 			<br>
-			<?php
-                $MEDIA_DIR = './media';
-				iterate_dir($MEDIA_DIR . '');
-				
-				function iterate_dir($dir) {
-                    global $MEDIA_DIR;
-					$files = scandir($dir);
-					sort($files);
-					foreach($files as $file) {
-						if(strlen($file) > 2 && (strpos($file, '.mp3') != 0 || strpos($file, '.') == 0)) {
-								$href = "$dir/$file";
-								if(strpos($file, '.') == 0) {
-									iterate_dir($href);
-                                } else {
-                                    build_box($file, str_replace( $MEDIA_DIR . '/' , '' , $href ) );
-                                }
-						}	
-					}
-				}
-				
-				function build_box($name, $href) {
-					$tokens = explode(' - ', str_replace('.mp3', '', $name));
-					$artist = $tokens[0]; // TODO change to proper id3
-					$name = $tokens[1];
-					$length = '1:23'; // TODO Fix >_>
-					$img_url = '//' . $_SERVER["HTTP_HOST"] . '/api/v1/art.php?file=' . $href;
-					
-					echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
-				}
-			?>
+			<song-list genre="all"></song-list>
 		</div>
 		</core-header-panel>
 		
@@ -107,15 +77,6 @@
                 document.querySelector('song-box').addEventListener('play', function(e) {
                     console.log(e.type, e.detail.title); //TODO: Toast
                 });
-            
-                var ajax = document.querySelector('core-ajax');
-
-                // Respond to events it fires.
-                ajax.addEventListener('core-response', function(e) {
-                  console.log(this.response);
-                });
-
-                ajax.go(); // Call its API methods.
             });
 		</script>
 	</body>

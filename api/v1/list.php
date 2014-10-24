@@ -21,10 +21,10 @@
         return;
     }
     
-    $RESPONSE_LIST = array();
+    $INFO_LIST = array();
     
     function get_genre_tracks($genre) {
-        global $RESPONSE_LIST;
+        global $INFO_LIST;
         if ($genre == 'all') {
             $CACHED_LIST = CACHE_DIR . 'all.json';
             if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
@@ -37,7 +37,7 @@
             } else {
                 iterate_dir( MEDIA_DIR );
                 header('Content-Type: application/json');
-                $output = json_encode($RESPONSE_LIST);
+                $output = json_encode($INFO_LIST);
                 echo($output);
                 file_put_contents( $CACHED_LIST , $output );
             }
@@ -47,7 +47,7 @@
     }
     
     function cache_check($genre) {
-        global $RESPONSE_LIST;
+        global $INFO_LIST;
         $CACHED_LIST = CACHE_DIR . $genre . '.json';
         if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
             header("Status-Code: 200");
@@ -59,7 +59,7 @@
         } else {
             iterate_dir( MEDIA_DIR . $genre );
             header('Content-Type: application/json');
-            $output = json_encode($RESPONSE_LIST);
+            $output = json_encode($INFO_LIST);
             echo($output);
             file_put_contents( $CACHED_LIST , $output );
         }
@@ -95,7 +95,7 @@
     }
     
     function build_json($filename, $rel_path) {
-        global $RESPONSE_LIST;
+        global $INFO_LIST;
         $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
-		$RESPONSE_LIST[] = json_decode(file_get_contents($INFO_FILE));
+		$INFO_LIST[] = json_decode(file_get_contents($INFO_FILE));
 	}
