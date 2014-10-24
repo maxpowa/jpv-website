@@ -67,7 +67,7 @@
 		</div>
 		</core-header-panel>
         
-        <template repeat="{{response}}">
+        <template repeat="{{response.songs}}">
             <song-box>
                 <img src='/api/v1/art.php?file={{filename}}'></img>
                 <div>
@@ -96,8 +96,9 @@
                 var ajax = document.querySelector("core-ajax");
                 ajax.addEventListener("core-response", 
                 function(e) {
+                    console.log(e);
                     document.querySelector('template').model = {
-                    response: e.detail.response
+                        response: e.detail.response
                     };
                 }
                 );
