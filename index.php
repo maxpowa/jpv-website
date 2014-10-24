@@ -32,14 +32,15 @@
 					<paper-tab name="nightcore">Nightcore</paper-tab>
 				</paper-tabs>
 			</core-toolbar>
-		</core-header-panel>
 
 		<div class="container">
 			<song-box>
 				<img src="http://2.bp.blogspot.com/-8v3Ft3nJZbU/U_qk2COThcI/AAAAAAAAAA8/XvLarrCcqWo/s640/No%2Btitle%2B.jpg"></img>
 				<div>
 					<h1>This is a test song</h1>
-					<h2>Your mom</h2>
+                    <core-tooltip label="Is a truck!" class="fancy" role="tooltip" tabindex="0" focused="">
+					    <h2>Your mom</h2>
+                    </core-tooltip>
 					<h3>4:20</h3>
 				</div>
 			</song-box>
@@ -75,6 +76,7 @@
 				}
 			?>
 		</div>
+		</core-header-panel>
 		
 		<script>
 			var tabs = document.querySelector('paper-tabs');
