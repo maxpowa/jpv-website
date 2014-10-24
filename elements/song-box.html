@@ -73,12 +73,8 @@
 		</style>
 		
 		<div class="song-header" layout horizontal center>
-			<img src='{{img_url}}'></img>
-			<div>
-                <h1>{{name}}</h1>
-                <h2>{{artist}}</h2>
-                <h3>{{length}}</h3>
-            </div>
+			<content select="img"></content>
+			<content select="div"></content>
 		</div>
 	
 		<div id="buttons">
@@ -86,7 +82,14 @@
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
-        <content></content>
+        <content>
+            <img src='{{img_url}}'></img>
+            <div>
+                <h1>{{name}}</h1>
+                <h2>{{artist}}</h2>
+                <h3>{{length}}</h3>
+            </div>
+        </content>
 	</template>
 	
 	<script>
