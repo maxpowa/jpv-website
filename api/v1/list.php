@@ -1,0 +1,89 @@
+<?php
+    /////////////////////////////////////////////////////////////////////
+    // list.php - provides a simple way to list all available tracks   //
+    //                                                                 //
+    // Request Scheme:                                                 //
+    //   GET /api/v1/list.php?genre={genre}                        //
+    //   {genre} is a folder in MEDIA_DIR                              //
+    // Response:                                                       //
+    //   JSON list of all songs for that genre                         //
+    /////////////////////////////////////////////////////////////////////
+    
+    require_once('config.php');
+    require_once(LIB_DIR . 'id3utils.php');
+    
+    if ( isset( $_GET[ 'genre' ] ) ) {
+        get_genre_tracks( strip_tags( trim( $_GET[ 'genre' ] ) ) );
+    } else {
+        header("Status-Code: 400");
+        header('Content-Type: application/json');
+        echo '{"status":"400", "message":"genre parameter not provided"}';
+        return;
+    }
+    
+    function get_genre_tracks($genre) {
+        if ($genre == 'all') {
+            $CACHED_LIST = CACHE_DIR . 'all.json';
+            if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
+                header("Status-Code: 200");
+                header('Content-Type: application/json');
+                readfile( $CACHED_LIST );
+                return;
+            } else {
+                iterate_dir( MEDIA_DIR );
+            }
+        } else {
+            cache_check($genre);
+        }
+    }
+    
+    function cache_check($genre) {
+        $CACHED_LIST = CACHE_DIR . $genre . '.json';
+        if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
+            header("Status-Code: 200");
+            header('Content-Type: application/json');
+            readfile( $CACHED_LIST );
+            return;
+        } else {
+            iterate_dir( MEDIA_DIR );
+        }
+    }
+    
+    /**
+     *
+     * Check file age, return true if older than $age (seconds), false otherwise
+     *
+     */
+    function check_file_age($file, $age) {
+        $now = time();
+        $filetime = filemtime($file);
+        if(($now - $filetime) >= $age){
+            return true;
+        } 
+        return false;
+    }
+    
+    function iterate_dir($dir) {
+        $files = scandir($dir);
+        sort($files);
+        foreach($files as $file) {
+            if(strlen($file) > 2 && (strpos($file, '.mp3') != 0 || strpos($file, '.') == 0)) {
+                    $href = "$dir/$file";
+                    if(strpos($file, '.') == 0) {
+                        iterate_dir($href);
+                } else {
+                    build_json($file, str_replace( MEDIA_DIR , '' , $href ));
+                }
+            }	
+        }
+    }
+    
+    function build_json($name) {
+        $tokens = explode(' - ', str_replace('.mp3', '', $name));
+        $artist = $tokens[0]; // TODO change to proper id3
+        $name = $tokens[1];
+        $length = '1:23'; // TODO Fix >_>
+        $img_url = 'http://i2.kym-cdn.com/entries/icons/original/000/001/030/dickbutt.jpg';
+					
+		echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
+	}
