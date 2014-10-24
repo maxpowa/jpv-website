@@ -4,8 +4,7 @@
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 
-<polymer-element name="song-box"
-        attributes="name artist length img_url">
+<polymer-element name="song-box">
 	<template>
 		<style>
 			:host {
@@ -82,22 +81,11 @@
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
-        <content>
-            <img src='{{img_url}}'></img>
-            <div>
-                <h1>{{name}}</h1>
-                <h2>{{artist}}</h2>
-                <h3>{{length}}</h3>
-            </div>
-        </content>
+		<paper-ripple><content></content></paper-ripple>
 	</template>
 	
 	<script>
 		Polymer('song-box', {
-            name: 'Loading...',
-            artist: 'Still Loading...',
-            length: '-0:00',
-            img_url: '/api/v1/art.php?file=asdf',
             icon: "av:play-arrow",
             onClick: function() {
                 document.querySelector('song-box').icon = 'av:pause';
