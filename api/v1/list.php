@@ -74,6 +74,7 @@
     }
     
     function iterate_dir($dir) {
+        global $RESPONSE_LIST;
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
