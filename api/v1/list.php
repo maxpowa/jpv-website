@@ -55,7 +55,7 @@
             readfile( $CACHED_LIST );
             return;
         } else {
-            iterate_dir( MEDIA_DIR );
+            iterate_dir( MEDIA_DIR . $genre );
             header('Content-Type: application/json');
             echo(json_encode($RESPONSE_LIST));
         }
