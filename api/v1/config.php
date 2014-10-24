@@ -1,3 +1,3 @@
 <?php
-    include(dirname(dirname(__FILE__)) . '/config.php');
+    include(dirname(__DIR__) . '/config.php');
 ?>

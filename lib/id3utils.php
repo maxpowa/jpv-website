@@ -10,10 +10,10 @@
     /////////////////////////////////////////////////////////////////////
     
     require_once('config.php');
-    require_once($GETID3_DIR.'getid3.php');
+    require_once(GETID3_DIR . 'getid3.php');
     
-    $ART_DIR = $CACHE_DIR . 'art/';
-    $TAG_DIR = $CACHE_DIR . 'tags/';
+    $ART_DIR = CACHE_DIR . 'art/';
+    $TAG_DIR = CACHE_DIR . 'tags/';
     
     /**
      * Gets art file, will return it as an image stream
