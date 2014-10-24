@@ -32,7 +32,7 @@
 					<paper-tab name="nightcore">Nightcore</paper-tab>
 				</paper-tabs>
 			</core-toolbar>
-
+		</core-header-panel>
 
 		<div class="container">
 			<song-box>
@@ -75,7 +75,6 @@
 				}
 			?>
 		</div>
-		</core-header-panel>
 		
 		<script>
 			var tabs = document.querySelector('paper-tabs');
