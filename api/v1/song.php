@@ -15,6 +15,7 @@
     if ( isset( $_GET[ 'file' ] ) ) {
         $filename = realpath( MEDIA_DIR . strip_tags( trim( $_GET[ 'file' ] ) ) );
     } else {
+        header('X-Cache: Miss');
         header('Content-Type: application/json');
         echo '{"status":"400", "message":"file parameter not provided"}';
         return;
@@ -24,10 +25,12 @@
     if ( file_exists( $filename ) ) {
         $FILE = get_info($filename);
         header('Content-Type: application/json');
+        header('X-Cache: Hit');
         $size= filesize( $FILE );
         header("Content-Length: $size bytes");
         readfile( $FILE );
     } else {
+        header('X-Cache: Miss');
         header('Content-Type: application/json');
         echo '{"status":"404", "message":"file provided does not exist"}';
         return;
