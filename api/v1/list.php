@@ -53,7 +53,7 @@
             return;
         } else {
             iterate_dir( MEDIA_DIR );
-            header('Content-Type: application/json');
+            //header('Content-Type: application/json');
             print_r($RESPONSE_LIST);
             echo(json_encode($RESPONSE_LIST));
         }
