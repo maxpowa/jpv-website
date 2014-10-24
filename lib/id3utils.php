@@ -10,7 +10,7 @@
     /////////////////////////////////////////////////////////////////////
     
     require_once 'config.php' ;
-    require_once $GETID3_DIR.'getid3.php' ;
+    require_once $GETID3_DIR . 'getid3.php' ;
     
     $ART_DIR = $CACHE_DIR . 'art/';
     $TAG_DIR = $CACHE_DIR . 'tags/';

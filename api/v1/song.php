@@ -9,9 +9,8 @@
     //   JSON data corresponding to the song information               //
     /////////////////////////////////////////////////////////////////////
     
-    # Requires getid3() lib
-    require_once 'config.php' ;
-    require_once $LIB_DIR . 'id3utils.php' ;
+    require_once('config.php');
+    require_once($LIB_DIR.'id3utils.php');
      
     if ( isset( $_GET[ 'file' ] ) ) {
         $filename = realpath( $MEDIA_DIR . strip_tags( trim( $_GET[ 'file' ] ) ) );
