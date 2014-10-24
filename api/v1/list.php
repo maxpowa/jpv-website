@@ -52,6 +52,7 @@
             return;
         } else {
             iterate_dir( MEDIA_DIR );
+            echo(json_encode($RESPONSE_LIST));
         }
     }
     
@@ -83,7 +84,6 @@
                 }
             }	
         }
-        print_r($RESPONSE_LIST);
     }
     
     function build_json($filename, $rel_path) {
