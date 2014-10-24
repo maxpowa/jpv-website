@@ -70,7 +70,7 @@
             $sizeraw = $filetags['filesize'];
             $bitrateraw = $filetags['audio']['bitrate'];
             $len = @$filetags['playtime_string'];
-            $md5 = $FILE_MD5
+            $md5 = $FILE_MD5;
             
             /** JSON response:
             { 
