@@ -21,7 +21,10 @@
         return;
     }
     
+    $RESPONSE_LIST = array();
+    
     function get_genre_tracks($genre) {
+        global $RESPONSE_LIST;
         if ($genre == 'all') {
             $CACHED_LIST = CACHE_DIR . 'all.json';
             if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
@@ -40,8 +43,6 @@
             cache_check($genre);
         }
     }
-    
-    $RESPONSE_LIST = array();
     
     function cache_check($genre) {
         global $RESPONSE_LIST;
