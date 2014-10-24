@@ -76,7 +76,6 @@
     }
     
     function iterate_dir($dir) {
-        //global $RESPONSE_LIST;
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
@@ -86,7 +85,6 @@
                     iterate_dir($href);
                 } else {
                     build_json($file, str_replace( MEDIA_DIR , '' , $href ));
-                    //print_r($RESPONSE_LIST);
                 }
             }	
         }
@@ -95,5 +93,5 @@
     function build_json($filename, $rel_path) {
         global $RESPONSE_LIST;
         $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
-		$RESPONSE_LIST[] = file_get_contents($INFO_FILE);
+		$RESPONSE_LIST[] = json_decode(file_get_contents($INFO_FILE));
 	}
