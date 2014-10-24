@@ -90,7 +90,7 @@
 					$length = '1:23'; // TODO Fix >_>
 					$img_url = '//' . $_SERVER["HTTP_HOST"] . '/api/v1/art.php?file=' . $href;
 					
-					echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
+					echo "<song-box name=$name length=$length artist=$artist img_url=$img_url></song-box><br>";
 				}
 			?>
 		</div>
