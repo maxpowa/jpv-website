@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
-<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 
 <polymer-element name="song-box">
@@ -81,7 +80,7 @@
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
-		<paper-ripple><content></content></paper-ripple>
+		<content></content>
 	</template>
 	
 	<script>
