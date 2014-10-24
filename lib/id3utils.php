@@ -19,6 +19,7 @@
      * Gets art file, will return it as an image stream
      */
     function get_art($filename) {
+        global $ART_DIR;
         $FILE_MD5 = md5_file( $filename );
         $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.gif';
         if ( file_exists( $CACHE_FILE ) ) {
@@ -64,7 +65,8 @@
         }
     }
     
-    function get_info($filename) {    
+    function get_info($filename) { 
+        global $TAG_DIR;    
         $FILE_MD5 = md5_file( $filename );
         $CACHE_FILE = $TAG_DIR . $FILE_MD5 . '.json';
         if ( file_exists( $CACHE_FILE ) ) {

@@ -70,6 +70,7 @@
     }
     
     function iterate_dir($dir) {
+        global $RESPONSE_LIST;
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
@@ -86,6 +87,7 @@
     }
     
     function build_json($filename, $rel_path) {
+        global $RESPONSE_LIST;
         $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
 		$RESPONSE_LIST[] = file_get_contents($INFO_FILE);
 	}
