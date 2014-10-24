@@ -18,6 +18,23 @@
 		<link rel="import" href="elements/post-card.html">
 
 		<link rel="stylesheet" href="css/style.css">
+        
+        <style shim-shadowdom="">
+            core-tooltip.fancy::shadow .core-tooltip {
+              opacity: 0;
+              -webkit-transition: all 300ms cubic-bezier(0,1.92,.99,1.07);
+              transition: all 300ms cubic-bezier(0,1.92,.99,1.07);
+              -webkit-transform: translate3d(0, -10px, 0);
+              transform: translate3d(0, -10px, 0);
+            }
+
+            core-tooltip.fancy:hover::shadow .core-tooltip,
+            core-tooltip.fancy:focus::shadow .core-tooltip {
+              opacity: 1;
+              -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+            }
+        </style>
 	</head>
 
 	<body unresolved>
@@ -39,7 +56,7 @@
 				<img src="http://2.bp.blogspot.com/-8v3Ft3nJZbU/U_qk2COThcI/AAAAAAAAAA8/XvLarrCcqWo/s640/No%2Btitle%2B.jpg"></img>
 				<div>
 					<h1>This is a test song</h1>
-                    <core-tooltip label="Is a truck!" class="fancy" role="tooltip" tabindex="0" focused="">
+                    <core-tooltip label="Is a truck!" class="fancy" role="tooltip">
 					    <h2>Your mom</h2>
                     </core-tooltip>
 					<h3>4:20</h3>
