@@ -82,7 +82,7 @@
         }
     }
     
-    function build_json($filename) {
-        $INFO_FILE = get_info($filename);
+    function build_json($filename, $rel_path) {
+        $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
 		echo file_get_contents($INFO_FILE);
 	}
