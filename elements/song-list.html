@@ -12,7 +12,9 @@
         <img src='/api/v1/art.php?file={{filename}}'></img>
         <div>
             <h1>{{title}}</h1>
-            <h2>{{artist}}</h2>
+            <core-tooltip label="{{album}}" class="fancy" role="tooltip">
+                <h2>{{artist}}</h2>
+            </core-tooltip>
             <h3>{{length}}</h3>
         </div>
     </song-box>

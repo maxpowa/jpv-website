@@ -15,7 +15,6 @@
 		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
 		
 		<link rel="import" href="elements/song-box.html">
-		<link rel="import" href="elements/song-list.html">
 		<link rel="import" href="elements/post-card.html">
 
 		<link rel="stylesheet" href="css/style.css">
@@ -39,7 +38,10 @@
 	</head>
 
 	<body unresolved>
-    
+        <core-ajax auto url="/api/v1/list.php" 
+            params='{"genre":"{{genre}}"}'
+            handleAs="json"></core-ajax>
+      
 		<core-header-panel>
 			<core-toolbar>
 				<paper-tabs id="toolbar-tabs" selected="home" self-end>
@@ -62,7 +64,20 @@
 				</div>
 			</song-box>
 			<br>
-			<song-list genre="all"></song-list>
+            
+			<template repeat="{{response}}">
+                <song-box>
+                    <img src='/api/v1/art.php?file={{filename}}'></img>
+                    <div>
+                        <h1>{{title}}</h1>
+                        <core-tooltip label="{{album}}" class="fancy" role="tooltip">
+                            <h2>{{artist}}</h2>
+                        </core-tooltip>
+                        <h3>{{length}}</h3>
+                    </div>
+                </song-box>
+                <br />
+            </template>
 		</div>
 		</core-header-panel>
 		
@@ -77,6 +92,15 @@
                 document.querySelector('song-box').addEventListener('play', function(e) {
                     console.log(e.type, e.detail.title); //TODO: Toast
                 });
+                
+                var ajax = document.querySelector("core-ajax");
+                ajax.addEventListener("core-response", 
+                function(e) {
+                    document.querySelector('template').model = {
+                    response: e.detail.response
+                    };
+                }
+                );
             });
 		</script>
 	</body>
