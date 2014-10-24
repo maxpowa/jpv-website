@@ -33,6 +33,8 @@
                 return;
             } else {
                 iterate_dir( MEDIA_DIR );
+                header('Content-Type: application/json');
+                echo(json_encode($RESPONSE_LIST));
             }
         } else {
             cache_check($genre);
@@ -53,8 +55,7 @@
             return;
         } else {
             iterate_dir( MEDIA_DIR );
-            //header('Content-Type: application/json');
-            print_r($RESPONSE_LIST);
+            header('Content-Type: application/json');
             echo(json_encode($RESPONSE_LIST));
         }
     }
@@ -74,7 +75,7 @@
     }
     
     function iterate_dir($dir) {
-        global $RESPONSE_LIST;
+        //global $RESPONSE_LIST;
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
@@ -84,7 +85,7 @@
                     iterate_dir($href);
                 } else {
                     build_json($file, str_replace( MEDIA_DIR , '' , $href ));
-                    print_r($RESPONSE_LIST);
+                    //print_r($RESPONSE_LIST);
                 }
             }	
         }
