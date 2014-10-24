@@ -13,7 +13,7 @@
     require_once(LIB_DIR . 'id3utils.php');
      
     if ( isset( $_GET[ 'file' ] ) ) {
-        $filename = realpath( $MEDIA_DIR . strip_tags( trim( $_GET[ 'file' ] ) ) );
+        $filename = realpath( MEDIA_DIR . strip_tags( trim( $_GET[ 'file' ] ) ) );
     } else {
         header('Content-Type: application/json');
         echo '{"status":"400", "message":"file parameter not provided"}';
