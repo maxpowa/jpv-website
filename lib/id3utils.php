@@ -19,49 +19,49 @@
      * Gets art file, will return it as an image stream
      */
     function get_art($filename) {
-            $FILE_MD5 = md5_file( $filename );
-            $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.gif';
-            if ( file_exists( $CACHE_FILE ) ) {
-                return $CACHE_FILE;
-            } else {
-                $getID3 = new getID3;
-                #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
-                $getID3->analyze($filename);
-                
-                if (isset($getID3->info['id3v2']['APIC'][0]['data'])) {
-                    $cover = $getID3->info['id3v2']['APIC'][0]['data'];
-                }
-                elseif (isset($getID3->info['id3v2']['PIC'][0]['data'])) {
-                    $cover = $getID3->info['id3v2']['PIC'][0]['data'];
-                } else {
-                    $cover = null;
-                }
-
-                
-                if (isset($getID3->info['id3v2']['APIC'][0]['image_mime'])) {
-                    $mimetype = $getID3->info['id3v2']['APIC'][0]['image_mime'];
-                } else {
-                    $mimetype = 'image/jpeg';
-                    // or null; depends on your needs 
-                }
-                
-                if (!is_null($cover)) {
-                    // Send file 
-                    header("Content-Type: " . $mimetype);
-                    
-                    if (isset($getID3->info['id3v2']['APIC'][0]['image_bytes'])) {
-                        header("Content-Length: " . $getID3->info['id3v2']['APIC'][0]['image_bytes']);
-                    }
-                    
-                    $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
-                    imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
-                    imagedestroy($img); # Destroy the image object to free up mem
-                    # If GD isn't loaded, you're gonna have a bad time.
-                    
-                    return $CACHE_FILE;
-                }
-                return null;
+        $FILE_MD5 = md5_file( $filename );
+        $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.gif';
+        if ( file_exists( $CACHE_FILE ) ) {
+            return $CACHE_FILE;
+        } else {
+            $getID3 = new getID3;
+            #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
+            $getID3->analyze($filename);
+            
+            if (isset($getID3->info['id3v2']['APIC'][0]['data'])) {
+                $cover = $getID3->info['id3v2']['APIC'][0]['data'];
             }
+            elseif (isset($getID3->info['id3v2']['PIC'][0]['data'])) {
+                $cover = $getID3->info['id3v2']['PIC'][0]['data'];
+            } else {
+                $cover = null;
+            }
+
+            
+            if (isset($getID3->info['id3v2']['APIC'][0]['image_mime'])) {
+                $mimetype = $getID3->info['id3v2']['APIC'][0]['image_mime'];
+            } else {
+                $mimetype = 'image/jpeg';
+                // or null; depends on your needs 
+            }
+            
+            if (!is_null($cover)) {
+                // Send file 
+                header("Content-Type: " . $mimetype);
+                
+                if (isset($getID3->info['id3v2']['APIC'][0]['image_bytes'])) {
+                    header("Content-Length: " . $getID3->info['id3v2']['APIC'][0]['image_bytes']);
+                }
+                
+                $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
+                imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
+                imagedestroy($img); # Destroy the image object to free up mem
+                # If GD isn't loaded, you're gonna have a bad time.
+                
+                return $CACHE_FILE;
+            }
+            return null;
+        }
     }
     
     function get_info($filename) {    

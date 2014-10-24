@@ -27,6 +27,8 @@
             if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
                 header("Status-Code: 200");
                 header('Content-Type: application/json');
+                $size= filesize( $CACHED_LIST );
+                header("Content-Length: $size bytes");
                 readfile( $CACHED_LIST );
                 return;
             } else {
@@ -42,6 +44,8 @@
         if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
             header("Status-Code: 200");
             header('Content-Type: application/json');
+            $size= filesize( $CACHED_LIST );
+            header("Content-Length: $size bytes");
             readfile( $CACHED_LIST );
             return;
         } else {
@@ -78,12 +82,7 @@
         }
     }
     
-    function build_json($name) {
-        $tokens = explode(' - ', str_replace('.mp3', '', $name));
-        $artist = $tokens[0]; // TODO change to proper id3
-        $name = $tokens[1];
-        $length = '1:23'; // TODO Fix >_>
-        $img_url = 'http://i2.kym-cdn.com/entries/icons/original/000/001/030/dickbutt.jpg';
-					
-		echo "<song-box><img src='$img_url'></img><div><h1>$name</h1><h2>$artist</h2><h3>$length</h3></div></song-box><br>";
+    function build_json($filename) {
+        $INFO_FILE = get_info($filename);
+		echo file_get_contents($INFO_FILE);
 	}
