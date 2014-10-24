@@ -59,6 +59,10 @@
 				color: #636363;
 			}
 
+            paper-icon-button.hover:hover {
+                background: #eee;
+                border-radius: 50%;
+            }
 		</style>
 		
 		<div class="song-header" layout horizontal center>
@@ -67,8 +71,8 @@
 		</div>
 	
 		<div id="buttons">
-			<paper-icon-button icon="file-download"></paper-icon-button>
-			<paper-icon-button icon="av:play-arrow"></paper-icon-button>
+			<paper-icon-button class="hover" icon="file-download"></paper-icon-button>
+			<paper-icon-button class="hover" icon="av:play-arrow"></paper-icon-button>
 		</div>
 		
 		<content></content>
