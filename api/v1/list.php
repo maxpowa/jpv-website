@@ -37,7 +37,7 @@
             } else {
                 iterate_dir( MEDIA_DIR );
                 header('Content-Type: application/json');
-                $time = date();
+                $time = time();
                 $output = "{\"last-modified\":\"$time\",\"songs\":".json_encode($INFO_LIST).'}';
                 echo($output);
                 file_put_contents( $CACHED_LIST , $output );
@@ -60,7 +60,7 @@
         } else {
             iterate_dir( MEDIA_DIR . $genre );
             header('Content-Type: application/json');
-            $time = date();
+            $time = time();
             $output = "{\"last-modified\":\"$time\",\"songs\":".json_encode($INFO_LIST).'}';
             echo($output);
             file_put_contents( $CACHED_LIST , $output );
