@@ -87,7 +87,7 @@
               "status": "200",
               "message": "request successful"
             }**/
-            $output = "{\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"html_page\":\"http://jpv.everythingisawesome.us/song/UNIMPLEMENTED\",\"download_url\":\"http://jpv.everythingisawesome.us/UNIMPLEMENTED\",\"status\":\"200\",\"message\":\"request successful\"}" ;
+            $output = "{\"filename\":\"$filename\",\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"status\":\"200\",\"message\":\"request successful\"}" ;
             file_put_contents( $CACHE_FILE , $output );
             return $CACHE_FILE ;
         }
