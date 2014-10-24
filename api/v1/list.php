@@ -83,6 +83,7 @@
                     iterate_dir($href);
                 } else {
                     build_json($file, str_replace( MEDIA_DIR , '' , $href ));
+                    print_r($RESPONSE_LIST);
                 }
             }	
         }
