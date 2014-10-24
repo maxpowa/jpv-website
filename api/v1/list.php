@@ -37,7 +37,9 @@
             } else {
                 iterate_dir( MEDIA_DIR );
                 header('Content-Type: application/json');
-                echo(json_encode($RESPONSE_LIST));
+                $output = json_encode($RESPONSE_LIST);
+                echo($output);
+                file_put_contents( $CACHED_LIST , $output );
             }
         } else {
             cache_check($genre);
@@ -57,7 +59,9 @@
         } else {
             iterate_dir( MEDIA_DIR . $genre );
             header('Content-Type: application/json');
-            echo(json_encode($RESPONSE_LIST));
+            $output = json_encode($RESPONSE_LIST);
+            echo($output);
+            file_put_contents( $CACHED_LIST , $output );
         }
     }
     
