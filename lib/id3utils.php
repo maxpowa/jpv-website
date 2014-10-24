@@ -37,23 +37,8 @@
             } else {
                 $cover = null;
             }
-
-            
-            if (isset($getID3->info['id3v2']['APIC'][0]['image_mime'])) {
-                $mimetype = $getID3->info['id3v2']['APIC'][0]['image_mime'];
-            } else {
-                $mimetype = 'image/jpeg';
-                // or null; depends on your needs 
-            }
             
             if (!is_null($cover)) {
-                // Send file 
-                header("Content-Type: " . $mimetype);
-                
-                if (isset($getID3->info['id3v2']['APIC'][0]['image_bytes'])) {
-                    header("Content-Length: " . $getID3->info['id3v2']['APIC'][0]['image_bytes']);
-                }
-                
                 $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
                 imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
                 imagedestroy($img); # Destroy the image object to free up mem
@@ -102,7 +87,6 @@
               "status": "200",
               "message": "request successful"
             }**/
-            header('Content-Type: application/json');
             $output = "{\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"html_page\":\"http://jpv.everythingisawesome.us/song/UNIMPLEMENTED\",\"download_url\":\"http://jpv.everythingisawesome.us/UNIMPLEMENTED\",\"status\":\"200\",\"message\":\"request successful\"}" ;
             file_put_contents( $CACHE_FILE , $output );
             return $CACHE_FILE ;
