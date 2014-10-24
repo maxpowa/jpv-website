@@ -42,6 +42,7 @@
     $RESPONSE_LIST = array();
     
     function cache_check($genre) {
+        global $RESPONSE_LIST;
         $CACHED_LIST = CACHE_DIR . $genre . '.json';
         if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
             header("Status-Code: 200");
@@ -52,6 +53,7 @@
             return;
         } else {
             iterate_dir( MEDIA_DIR );
+            header('Content-Type: application/json');
             echo(json_encode($RESPONSE_LIST));
         }
     }
@@ -71,7 +73,6 @@
     }
     
     function iterate_dir($dir) {
-        global $RESPONSE_LIST;
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
