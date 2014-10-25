@@ -22,12 +22,12 @@ html, body {
 
 .container {
 	width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 70px);
 	margin: 50px auto;
 }
 
 core-header-panel {
-	height: 80px;
+	height: 70px;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch; 
 }

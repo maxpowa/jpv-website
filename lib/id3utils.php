@@ -88,7 +88,7 @@
               "status": "200",
               "message": "request successful"
             }**/
-            $output = "{\"filename\":\"$href\",\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"status\":\"200\",\"message\":\"request successful\"}" ;
+            $output = "{\"filename\":\"$href\",\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"albumartist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"length\":\"$len\",\"status\":\"200\",\"message\":\"request successful\"}" ;
             file_put_contents( $CACHE_FILE , $output );
             return $CACHE_FILE ;
         }
