@@ -40,6 +40,7 @@
             
             if (!is_null($cover)) {
                 $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
+                imagescale($img, 70, 70);
                 imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
                 imagedestroy($img); # Destroy the image object to free up mem
                 # If GD isn't loaded, you're gonna have a bad time.
