@@ -91,7 +91,7 @@
                 this.fire('play', {title: 'song name'});
             },
             linkNav: function(e) {
-                window.location.href = e.target.getAttribute('link');
+                window.open(e.target.getAttribute('link'),'_blank');
             }
         });
 	</script>
