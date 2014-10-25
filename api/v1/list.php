@@ -3,21 +3,36 @@
     // list.php - provides a simple way to list all available tracks   //
     //                                                                 //
     // Request Scheme:                                                 //
-    //   GET /api/v1/list.php?genre={genre}                        //
-    //   {genre} is a folder in MEDIA_DIR                              //
+    //   GET /api/v1/list.php?genre={genre}(&format={format})          //
+    //   {genre} is a folder in MEDIA_DIR	                           //
+	//   {format} is the format to respond on, json or html            //
     // Response:                                                       //
-    //   JSON list of all songs for that genre                         //
+    //   JSON/HTML list of all songs for that genre                    //
     /////////////////////////////////////////////////////////////////////
     
     require_once('config.php');
     require_once(LIB_DIR . 'id3utils.php');
     
+	error_reporting(-1); // TODO REMOVE THIS SHIT
+  	ini_set('display_errors', 'On'); // TODO AND THIS SHIT TOO
+	
+	$format = 'json';
+	if(isset($_GET['format']))
+		$format = $_GET['format'];
+	
+	if($format != 'json' && $format != 'html') {
+	    header("Status-Code: 400");
+        header('Content-Type: application/json');
+        echo '{"status":"400", "message":"\'format\' parameter (\''.$format.'\') is invalid"}';
+        return;
+	}	
+	
     if ( isset( $_GET[ 'genre' ] ) ) {
         get_genre_tracks( strip_tags( trim( $_GET[ 'genre' ] ) ) );
     } else {
         header("Status-Code: 400");
         header('Content-Type: application/json');
-        echo '{"status":"400", "message":"genre parameter not provided"}';
+        echo '{"status":"400", "message":"\'genre\' parameter not provided"}';
         return;
     }
     
@@ -25,27 +40,52 @@
     
     function get_genre_tracks($genre) {
         global $INFO_LIST;
-        if ($genre == 'all') {
-            $CACHED_LIST = CACHE_DIR . 'all.json';
-            if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
-                header("Status-Code: 200");
-                header('Content-Type: application/json');
-                $size= filesize( $CACHED_LIST );
-                header("Content-Length: $size bytes");
-                readfile( $CACHED_LIST );
-                return;
-            } else {
-                iterate_dir( MEDIA_DIR );
-                header('Content-Type: application/json');
-                $time = time();
-                $output = "{\"last-modified\":\"$time\",\"songs\":".json_encode($INFO_LIST).'}';
-                echo($output);
-                file_put_contents( $CACHED_LIST , $output );
-            }
-        } else {
-            cache_check($genre);
-        }
+		global $format;
+		
+		$CACHED_LIST = CACHE_DIR . $genre . '.json';
+		if (file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST , 3600)) {
+			header("Status-Code: 200");
+			
+			header(content_type());
+			$size= filesize($CACHED_LIST);
+			header("Content-Length: $size bytes");
+			if($format == 'html')
+				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true)));
+			else readfile($CACHED_LIST);
+			return;
+		} else {
+			iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
+			header(content_type());
+			$time = time();
+			$json_list = json_encode($INFO_LIST);
+			file_put_contents($CACHED_LIST , $json_list);
+			
+			if($format == 'html')
+				echo(get_jpv_html($INFO_LIST));
+			else echo($output);
+		}
     }
+	
+	function content_type() {
+		global $format;
+		return $format == 'html' ? 'Content-Type: text' : 'Content-Type: application/json';
+	}
+	
+	function get_jpv_html($list) {
+		$html = '';
+		
+		foreach($list as $song_data) {
+			$title = $song_data['title'];
+			$artist = $song_data['artist'];
+			$length = $song_data['length'];
+			$href = $song_data['filename'];
+			
+			$html = "$html<song-box title='$title' artist='$artist' length='$length' href='$href'></song-box>";
+		}
+		
+		echo($html);
+		return $html;
+	}
     
     function cache_check($genre) {
         global $INFO_LIST;
