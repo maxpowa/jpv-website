@@ -78,7 +78,7 @@
             return $CACHE_FILE ;
         } else {
             $getID3 = new getID3;
-            #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
+            $getID3->option_tag_id3v2 = true;
             $filetags = $getID3->analyze($filename);
             $songname = $filetags['tags']['id3v2']['title'][0];
             $artist = $filetags['tags']['id3v2']['artist'][0];
