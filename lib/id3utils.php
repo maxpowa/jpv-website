@@ -39,7 +39,7 @@
             }
             
             if (!is_null($cover)) {
-                list($source_image_width, $source_image_height) = getimagesizefromstring($img);
+                list($source_image_width, $source_image_height) = getimagesizefromstring($cover);
                 $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
                 
                 // Resizing code - max width/height are set via config.php
