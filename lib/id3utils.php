@@ -16,16 +16,6 @@
     $TAG_DIR = CACHE_DIR . 'tags/';
     
     /**
-     * Boy is this ever useful
-     */
-    if (!function_exists('getimagesizefromstring')) {
-        function getimagesizefromstring($data) {
-            $uri = 'data://application/octet-stream;base64,' . base64_encode($data);
-            return getimagesize($uri);
-        }
-    }
-    
-    /**
      * Gets art file, will return it as an image stream
      */
     function get_art($filename) {
