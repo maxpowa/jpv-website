@@ -71,7 +71,7 @@
             $bitrateraw = $filetags['audio']['bitrate'];
             $len = @$filetags['playtime_string'];
             $md5 = $FILE_MD5;
-            $href = str_replace( MEDIA_DIR, '', $filename );
+            $href = str_replace( '+', '%2B', str_replace( MEDIA_DIR, '', $filename ));
             
             /** JSON response:
             { 
