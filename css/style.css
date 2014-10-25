@@ -23,7 +23,7 @@ html, body {
 .container {
 	width: 100%;
     height: calc(100% - 70px);
-	margin: 50px auto;
+	margin: 10px auto;
 }
 
 core-header-panel {
