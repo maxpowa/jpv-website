@@ -49,10 +49,10 @@ core-toolbar {
 
 @media (min-width: 481px) {
 	#toolbar-tabs {
-		width: 100%;
+		width: 450px;
 	}
 
 	.container {
-		width: 100%;
+		width: 400px;
 	}
 }
