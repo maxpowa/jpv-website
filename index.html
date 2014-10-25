@@ -95,7 +95,7 @@
                 ajax.addEventListener("core-response", 
                     function(e) {
                         console.log(e);
-                        document.querySelector('core-header-panel#container.template').model = {
+                        document.querySelector('#container.template').model = {
                             response: e.detail.response
                         };
                         console.log(e.detail.response);
