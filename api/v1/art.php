@@ -25,7 +25,7 @@
     if ( file_exists( $filename ) ) {
         $FILE = get_art($filename);
         if (!is_null($FILE)) {
-            header("Content-type: image/gif");
+            header("Content-type: image/jpeg");
             header("Status-Code: 200");
             $size= filesize( $FILE );
             header("Content-Length: $size bytes");

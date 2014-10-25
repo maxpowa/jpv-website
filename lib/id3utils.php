@@ -21,7 +21,7 @@
     function get_art($filename) {
         global $ART_DIR;
         $FILE_MD5 = md5_file( $filename );
-        $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.gif';
+        $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.jpg';
         if ( file_exists( $CACHE_FILE ) ) {
             return $CACHE_FILE;
         } else {
@@ -39,9 +39,28 @@
             }
             
             if (!is_null($cover)) {
+                list($source_image_width, $source_image_height) = getimagesizefromstring($img);
                 $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
-                imagescale($img, 70, 70);
-                imagegif($img, $CACHE_FILE); # Save the image to disk, for later retrieval
+                
+                // Resizing code - max width/height are set via config.php
+                $source_aspect_ratio = $source_image_width / $source_image_height;
+                $thumbnail_aspect_ratio = THUMBNAIL_IMAGE_MAX_WIDTH / THUMBNAIL_IMAGE_MAX_HEIGHT;
+                if ($source_image_width <= THUMBNAIL_IMAGE_MAX_WIDTH && $source_image_height <= THUMBNAIL_IMAGE_MAX_HEIGHT) {
+                    $thumbnail_image_width = $source_image_width;
+                    $thumbnail_image_height = $source_image_height;
+                } elseif ($thumbnail_aspect_ratio > $source_aspect_ratio) {
+                    $thumbnail_image_width = (int) (THUMBNAIL_IMAGE_MAX_HEIGHT * $source_aspect_ratio);
+                    $thumbnail_image_height = THUMBNAIL_IMAGE_MAX_HEIGHT;
+                } else {
+                    $thumbnail_image_width = THUMBNAIL_IMAGE_MAX_WIDTH;
+                    $thumbnail_image_height = (int) (THUMBNAIL_IMAGE_MAX_WIDTH / $source_aspect_ratio);
+                }
+                $thumbnail_gd_image = imagecreatetruecolor($thumbnail_image_width, $thumbnail_image_height);
+                imagecopyresampled($thumbnail_gd_image, $img, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $source_image_width, $source_image_height);
+                // Resizing code
+                
+                imagejpeg($thumbnail_gd_image, $CACHE_FILE); # Save the image to disk, for later retrieval
+                imagedestroy($thumbnail_gd_image); # Destroy the image object to free up mem
                 imagedestroy($img); # Destroy the image object to free up mem
                 # If GD isn't loaded, you're gonna have a bad time.
                 
