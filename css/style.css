@@ -22,6 +22,8 @@ html, body {
 .container {
 	width: 100%;
     height: calc(100% - 70px);
+    padding-left: 10px;
+    padding-right: 10px;
 	margin: 10px auto;
 }
 
