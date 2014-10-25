@@ -53,17 +53,6 @@
 		</core-header-panel>
 
         <div class="container">
-            <song-box>
-                <img src="http://2.bp.blogspot.com/-8v3Ft3nJZbU/U_qk2COThcI/AAAAAAAAAA8/XvLarrCcqWo/s640/No%2Btitle%2B.jpg"></img>
-                <div>
-                    <h1>This is a test song</h1>
-                    <core-tooltip label="Is a truck!" class="fancy" role="tooltip">
-                        <h2>Your mom</h2>
-                    </core-tooltip>
-                    <h3>4:20</h3>
-                </div>
-            </song-box>
-            <br>
             <template id="song-list" repeat="{{response.songs}}">
                 <song-box filename="{{filename}}">
                     <img src='/api/v1/art.php?file={{filename}}'></img>
