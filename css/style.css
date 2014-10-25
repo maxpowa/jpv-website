@@ -20,7 +20,7 @@ html, body {
 }
 
 .container {
-	width: calc(100% - 70px);
+	width: calc(100% - 20px);
     height: calc(100% - 70px);
     margin: 10px auto;
 }
@@ -46,14 +46,13 @@ core-toolbar {
   text-transform: uppercase;
 }
 
-@media (min-width: 520px) {
-
+@media (min-width: 481px) {
 	#toolbar-tabs {
-        min-width: 510px;
+        min-width: 471px;
 		width: 100%;
 	}
 
 	.container {
-		width: 500px;
+		width: 461px;
 	}
 }
