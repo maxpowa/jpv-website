@@ -63,7 +63,7 @@
 				</div>
 			</song-box>
 			<br>
-            <template id="song-list-template" repeat="{{ song in response.songs }}">
+            <template repeat="{{ song in response.songs }}">
                 <song-box>
                     <img src='/api/v1/art.php?file={{song.filename}}'></img>
                     <div>
@@ -87,21 +87,21 @@
             
             // Wait for 'polymer-ready'. Ensures the element is upgraded.
             window.addEventListener('polymer-ready', function() {
-                document.querySelector('song-box').addEventListener('play', function(e) {
-                    console.log(e.type, e.detail.title); //TODO: Toast
-                });
+//                document.querySelector('song-box').addEventListener('play', function(e) {
+//                    console.log(e.type, e.detail.title); //TODO: Toast
+//                });
                 
                 var ajax = document.querySelector("core-ajax");
                 ajax.addEventListener("core-response", 
                     function(e) {
                         console.log(e);
-                        document.querySelector('#song-list-template').model = {
+                        document.querySelector('template').model = {
                             response: e.detail.response
                         };
                         console.log(e.detail.response);
                     }
                 );
-                ajax.go();
+                //ajax.go();
             });
 		</script>
 	</body>
