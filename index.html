@@ -65,7 +65,7 @@
             </song-box>
             <br>
             <template id="song-list" repeat="{{response.songs}}">
-                <song-box>
+                <song-box filename="{{filename}}">
                     <img src='/api/v1/art.php?file={{filename}}'></img>
                     <div>
                         <h1>{{title}}</h1>
@@ -74,7 +74,6 @@
                         </core-tooltip>
                         <h3>{{length}}</h3>
                     </div>
-                    <a href="/media{{filename}}" id="dl-link"></a>
                 </song-box>
                 <br />
             </template>

@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 
-<polymer-element name="song-box">
+<polymer-element name="song-box" attributes="filename">
 	<template>
 		<style>
 			:host {
@@ -76,7 +76,7 @@
 		</div>
 	
 		<div id="buttons">
-			<content select="#dl-link"><paper-icon-button class="hover" icon="file-download"></paper-icon-button></content>
+			<paper-icon-button class="hover" icon="file-download" link="/media{{filename}}" on-tap="{{linkNav}}"></paper-icon-button>
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
@@ -89,6 +89,9 @@
             onClick: function() {
                 document.querySelector('song-box').icon = 'av:pause';
                 this.fire('play', {title: 'song name'});
+            }
+            linkNav: function(e) {
+                window.location.href = e.target.getAttribute('link');
             }
         });
 	</script>
