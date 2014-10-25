@@ -69,8 +69,17 @@
 		
 		<script>
 			var tabs = document.querySelector('paper-tabs');
-			tabs.addEventListener('core-select', function(e) {
-				console.log("Selected: " + tabs.selected);
+			tabs.addEventListener('core-select', function(e) { 
+                var ajax = document.querySelector("core-ajax");
+                ajax.url = ("/api/v1/list.php?genre=" + tabs.selected);
+                ajax.addEventListener("core-response", 
+                    function(e) {
+                        document.querySelector('#song-list').model = {
+                            response: e.detail.response
+                        };
+                    }
+                );
+                ajax.go();
 			});
             
             // Wait for 'polymer-ready'. Ensures the element is upgraded.
@@ -82,11 +91,9 @@
                 var ajax = document.querySelector("core-ajax");
                 ajax.addEventListener("core-response", 
                     function(e) {
-                        console.log(e);
                         document.querySelector('#song-list').model = {
                             response: e.detail.response
                         };
-                        console.log(e.detail.response);
                     }
                 );
                 //ajax.go();
