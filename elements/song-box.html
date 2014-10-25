@@ -76,7 +76,9 @@
 		</div>
 	
 		<div id="buttons">
-			<paper-icon-button class="hover" icon="file-download" on-tap="window.open('/media{{filename}}', '_blank');"></paper-icon-button>
+            <a href="/media{{filename}}" target="_blank">
+                <paper-icon-button class="hover" icon="file-download"></paper-icon-button>
+            </a>
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
 		
