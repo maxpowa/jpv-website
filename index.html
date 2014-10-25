@@ -63,21 +63,22 @@
 				</div>
 			</song-box>
 			<br>
-            <template repeat="{{ song in response.songs }}">
-                <song-box>
-                    <img src='/api/v1/art.php?file={{song.filename}}'></img>
-                    <div>
-                        <h1>{{song.title}}</h1>
-                        <core-tooltip label="{{song.album}}" class="fancy" role="tooltip">
-                            <h2>{{song.artist}}</h2>
-                        </core-tooltip>
-                        <h3>{{song.length}}</h3>
-                    </div>
-                </song-box>
-                <br />
-            </template>
 		</div>
 		</core-header-panel>
+        
+        <template repeat="{{response.songs}}">
+            <song-box>
+                <img src='/api/v1/art.php?file={{filename}}'></img>
+                <div>
+                    <h1>{{title}}</h1>
+                    <core-tooltip label="{{album}}" class="fancy" role="tooltip">
+                        <h2>{{artist}}</h2>
+                    </core-tooltip>
+                    <h3>{{length}}</h3>
+                </div>
+            </song-box>
+            <br />
+        </template>
 		
 		<script>
 			var tabs = document.querySelector('paper-tabs');
