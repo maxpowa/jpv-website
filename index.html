@@ -86,20 +86,20 @@
 			});
             
             // Wait for 'polymer-ready'. Ensures the element is upgraded.
-            window.addEventListener('polymer-ready', function(e) {
+            window.addEventListener('polymer-ready', function() {
                 document.querySelector('song-box').addEventListener('play', function(e) {
                     console.log(e.type, e.detail.title); //TODO: Toast
                 });
                 
                 var ajax = document.querySelector("core-ajax");
                 ajax.addEventListener("core-response", 
-                function(e) {
-                    console.log(e);
-                    document.querySelector('#song-list-template').model = {
-                        response: e.detail.response
-                    };
-                    console.log(e.detail.response);
-                }
+                    function(e) {
+                        console.log(e);
+                        document.querySelector('#song-list-template').model = {
+                            response: e.detail.response
+                        };
+                        console.log(e.detail.response);
+                    }
                 );
                 ajax.go();
             });
