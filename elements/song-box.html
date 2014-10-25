@@ -77,7 +77,9 @@
 	
 		<div id="buttons">
             <a href="/media{{filename}}" style="text-decoration:none;color:inherit;" target="_blank">
-                <paper-icon-button class="hover" icon="file-download"></paper-icon-button>
+                <core-tooltip label="You may need to Right-Click, \"Save As...\"" class="fancy" role="tooltip">
+                    <paper-icon-button class="hover" icon="file-download"></paper-icon-button>
+                </core-tooltip>
             </a>
 			<paper-icon-button id="control" class="hover" icon="{{icon}}" onclick="{{onClick}}"></paper-icon-button>
 		</div>
