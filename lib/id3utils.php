@@ -22,6 +22,9 @@
         global $ART_DIR;
         $FILE_MD5 = md5_file( $filename );
         $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.jpg';
+		if(!file_exists($ART_DIR))
+			mkdir($ART_DIR);
+
         if ( file_exists( $CACHE_FILE ) ) {
             return $CACHE_FILE;
         } else {
@@ -74,6 +77,9 @@
         global $TAG_DIR;    
         $FILE_MD5 = md5_file( $filename );
         $CACHE_FILE = $TAG_DIR . $FILE_MD5 . '.json';
+		if(!file_exists($TAG_DIR))
+			mkdir($TAG_DIR);
+
         if ( file_exists( $CACHE_FILE ) ) {
             return $CACHE_FILE ;
         } else {
