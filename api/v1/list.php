@@ -85,7 +85,7 @@
 			$length = $song_data['length'];
 			$href = $song_data['filename'];
 			
-			$html = "$html<song-box title='$title' artist='$artist' album='$album' length='$length' href='$href'></song-box>";
+			$html = "$html<div class='song-box' href='$href'><h1>$title</h1><h2>$artist</h2></h3>$length'</h3></div>";
 		}
 		
 		echo($html);
