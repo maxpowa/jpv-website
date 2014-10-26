@@ -47,11 +47,14 @@
 			header("Status-Code: 200");
 			
 			header(content_type());
-			$size= filesize($CACHED_LIST);
-			header("Content-Length: $size bytes");
+
 			if($format == 'html')
 				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true)));
-			else readfile($CACHED_LIST);
+			else {
+				$size = filesize($CACHED_LIST);
+				header("Content-Length: $size bytes");
+				readfile($CACHED_LIST);
+			}
 			return;
 		} else {
 			iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
@@ -59,6 +62,7 @@
 			$time = time();
 			$json_list = json_encode($INFO_LIST);
 			file_put_contents($CACHED_LIST , $json_list);
+			header("Content-Length: $size bytes");
 			
 			if($format == 'html')
 				echo(get_jpv_html($INFO_LIST));
