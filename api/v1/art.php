@@ -22,7 +22,7 @@
         return;
     }
   
-    if ( file_exists( $filename ) ) {
+	if (file_exists($filename) && is_file($filename)) {
         $FILE = get_art($filename);
         if (!is_null($FILE)) {
             header("Content-type: image/jpeg");
