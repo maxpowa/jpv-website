@@ -17,7 +17,8 @@ npm-debug.log
 # Cache ignores
 ##
 
-cache/*.png
+cache/
+media/
 
 ##
 # Windows ignores
