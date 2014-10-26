@@ -27,7 +27,7 @@
         header('Content-Type: application/json');
         header("Status-Code: 200");
         $size= filesize( $FILE );
-        header("Content-Length: $size bytes");
+        header("Content-Length: $size");
         readfile( $FILE );
         return;
     } else {
