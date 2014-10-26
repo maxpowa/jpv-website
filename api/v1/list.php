@@ -56,7 +56,15 @@
 			}
 			return;
 		} else {
-			iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
+			$dir = MEDIA_DIR . ($genre == 'all' ? '' : $genre);
+			if(!file_exists($dir))
+			{
+				header("Status-Code: 200");
+				header('Content-Type: application/json');
+				echo '{"status":"400", "message":"genre \'' . $genre . '\' does not exist"}';
+				return;
+			}
+			iterate_dir($dir);
 			header('Content-Type: application/json');
 			$time = time();
 			$json_list = json_encode($INFO_LIST);
@@ -127,9 +135,6 @@
     }
     
     function iterate_dir($dir) {
-		if(!file_exists($dir))
-			return;
-	
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
