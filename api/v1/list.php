@@ -62,13 +62,13 @@
 			
 			if($format == 'html')
 				echo(get_jpv_html($INFO_LIST));
-			else echo($output);
+			else echo($json_list);
 		}
     }
 	
 	function content_type() {
 		global $format;
-		return $format == 'html' ? 'Content-Type: text' : 'Content-Type: application/json';
+		return $format == 'html' ? 'Content-Type: text/plain' : 'Content-Type: application/json';
 	}
 	
 	function get_jpv_html($list) {
@@ -77,10 +77,11 @@
 		foreach($list as $song_data) {
 			$title = $song_data['title'];
 			$artist = $song_data['artist'];
+			$album = $song_data['album'];
 			$length = $song_data['length'];
 			$href = $song_data['filename'];
 			
-			$html = "$html<song-box title='$title' artist='$artist' length='$length' href='$href'></song-box>";
+			$html = "$html<song-box title='$title' artist='$artist' album='$album' length='$length' href='$href'></song-box>";
 		}
 		
 		echo($html);
