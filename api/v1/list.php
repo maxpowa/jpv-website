@@ -51,7 +51,7 @@
 				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true), 'From CACHED_LIST'));
 			else {
 				$size = filesize($CACHED_LIST);
-				header("Content-Length: $size bytes");
+				header("Content-Length: $size");
 				readfile($CACHED_LIST);
 			}
 			return;
@@ -107,7 +107,7 @@
             header("Status-Code: 200");
             header('Content-Type: application/json');
             $size = filesize($CACHED_LIST);
-            header("Content-Length: $size bytes");
+            header("Content-Length: $size");
             readfile($CACHED_LIST);
             return;
         } else {
