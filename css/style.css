@@ -104,18 +104,19 @@ body {
 }
 
 .song-box .song-title {
-	font-weight: 300;
-	font-size: 30px;
+	font-weight: 400;
+	font-size: 20px;
     display: inline-block;
 }
 
 .song-box .song-artist {
+	font-weight: 300;
 	font-size: 20px;
     display: inline-block;
 }
 
 .song-box .song-length {
-	font-size: 15px;
+	font-size: 25px;
     display: inline-block;
 }
 
