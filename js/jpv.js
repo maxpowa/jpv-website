@@ -5,11 +5,11 @@ const colors = {
 	'nightcore': '#5677fc'
 };
 
+var genreContents = { };
 var loading = '';
 
-$(function () { $('[data-toggle="tooltip"]').tooltip({'placement': 'top'}); });
-
 $(function() {
+	resetTooltip();
 	var hash = getHash('all');
 	loading = $('#song-list').html();
 	selectAndSetContents(hash);
@@ -24,14 +24,19 @@ function selectAndSetContents(genre) {
 	getContents(genre);
 	$('.nav li').removeClass('active');
 	$('.nav li[genre=' +  genre + ']').addClass('active');
-	
+}
+
+function animateNavbar(genre) {
 	$('#the-navbar').animate({
 		'background-color': colors[genre],
 	});
 }
 
 function getContents(genre) {
-	$.get('./api/v1/list.php', {
+	if(genre in genreContents) {
+		$('#song-list').html(genreContents[genre]);
+		animateNavbar(genre);
+	} else $.get('./api/v1/list.php', {
 		'genre': genre,
 		'format': 'html'
 	}, function(resp) {
@@ -39,10 +44,19 @@ function getContents(genre) {
 		if(resp.status != 200)
 			contents = "Status Code " + resp.status + ": " + contents;
 		
+		animateNavbar(genre);
 		contents = contents.replace(/song-play-button/g, 'song-play-button glyphicon glyphicon-play-circle').replace(/song-download-button/g, 'song-download-button glyphicon glyphicon-download');
 		$('#song-list').html(contents);
-        $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+		genreContents[genre] = contents;
 	});
+}
+
+function setGenre(genre, html) {
+	resetTooltip();
+}
+
+function resetTooltip() {
+	$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
 }
 
 function getHash(fallback) {
