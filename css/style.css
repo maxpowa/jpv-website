@@ -2,10 +2,6 @@
 	font-family: 'Roboto', sans-serif;
 }
 
-a { 
-	color: inherit;
-	text-decoration: none;
-} 
 
 body {
 	padding-top: 50px;
@@ -15,13 +11,6 @@ body {
 
 audio {
 	width: 308px;
-}
-
-#the-navbar {
-	background-color: #259b24;
-	background-image: none;
-	border: none;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
 #player {
@@ -38,6 +27,13 @@ audio {
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.75);
 	text-align: right;
 	display: none;
+}
+
+#the-navbar {
+	background-color: #259b24;
+	background-image: none;
+	border: none;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
 .navbar-nav>li {
@@ -86,8 +82,159 @@ audio {
 	font-size: 25px;
 }
 
-#song-list {
+#contents {
 	padding-top: 25px;
+	margin-bottom: 80px;
+}
+
+#content-info {
+	color: #555;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+}
+
+.content-header {
+	font-weight: 100;
+	font-size: 50px;
+}
+
+.content-header a:hover, .btsync-link:hover {
+	text-decoration: none;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.btsync-link {
+	color: #428bca;
+	cursor: pointer;
+}
+
+.btsync-separator {
+	font-weight: 500;
+}
+
+.btsync-hidden-contents {
+	padding-top: 10px;* {
+	font-family: 'Roboto', sans-serif;
+}
+
+
+body {
+	padding-top: 50px;
+	background-color: #e5e5e5;
+	overflow-y: scroll;
+}
+
+audio {
+	width: 308px;
+}
+
+#player {
+	position: fixed;
+	bottom: 0;
+	left: calc(100% - 320px);
+	padding: 1px 5px 1px 5px;
+  	width: 320px;
+	font-weight: 100;
+	font-size: 15px;
+	background-color: #259b24;
+	color: #fff;
+ 	box-shadow: -1px -1px 10px rgba(0, 0, 0, 0.75);
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.75);
+	text-align: right;
+	display: none;
+}
+
+#the-navbar {
+	background-color: #259b24;
+	background-image: none;
+	border: none;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+}
+
+.navbar-nav>li {
+	min-width: 120px;
+	text-align: center;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand {
+	color: #fff;
+	font-weight: 500;
+	text-shadow: none;
+} 
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>.active>a:hover {
+	background-image: none;
+	background-color: rgba(0, 0, 0, 0);
+	box-shadow: none;
+	height: 51px;
+	border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-nav>li>a:focus {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>.active>a:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+}
+
+#loading-doodad {
+	font-weight: 100;
+	font-size: 60px;
+	text-align: center;
+	margin-top: 80px;
+}
+
+#loading-doodad img { 
+	width: 70px;
+	height: 70px;
+	margin-right: 10px;
+	margin-bottom: 8px;
+}
+
+.loading-subtitle {
+	font-size: 25px;
+}
+
+#contents {
+	padding-top: 25px;
+	margin-bottom: 80px;
+}
+
+#content-info {
+	color: #555;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+}
+
+.content-header {
+	font-weight: 100;
+	font-size: 50px;
+}
+
+.content-header a:hover, .btsync-link:hover {
+	text-decoration: none;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.btsync-link {
+	color: #428bca;
+	cursor: pointer;
+}
+
+.btsync-separator {
+	font-weight: 500;
+}
+
+.btsync-hidden-contents {
+	padding-top: 10px;
+}
+
+.btsync-hide {
+	display: none;
 }
 
 .song-box {
@@ -151,6 +298,11 @@ audio {
 
 }
 
+.song-box a {
+	color: inherit;
+	text-decoration: none;
+}
+
 .song-box .song-button {
 	cursor: pointer;
 	margin: 5px 5px 5px 5px;
@@ -173,6 +325,176 @@ audio {
 
 	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
 		border-color: rgba(0, 0, 0, 0.2);
+	}
+
+	.content-header {
+		font-weight: 300;
+		font-size: 25px;
+	}	
+
+	#content-info {
+		font-size: 12px;
+	}	
+
+	.song-box {
+		width: calc(100% - 10px);
+	}
+
+	.song-box .song-image {
+		width: 70px;
+	}
+
+	.song-box img {
+		width: 50px;
+		height: 50px;
+		min-width: 50px;
+		min-height: 50px;
+		border-radius: 50%;
+		margin-left: 5px;
+	}
+
+	.song-box {
+		white-space: nowrap;
+	}
+
+	.song-box .song-info {
+		position: absolute;
+		margin-left: 70px;
+	}
+
+	.song-box .song-buttons {
+		margin: 0px 0px 5px calc(100% - 20px);
+	}
+
+	.song-box .song-title {
+		font-size: 10px;
+	}
+
+	.song-box .song-artist {
+		font-size: 10px;
+	}
+
+	.song-box .song-length {
+		font-size: 12px;
+	}
+
+	#loading-doodad {
+		font-size: 30px;
+	}
+
+	.loading-subtitle {
+		font-size: 15px;
+	}
+
+}
+}
+
+.btsync-hide {
+	display: none;
+}
+
+.song-box {
+	font-weight: 100;
+	background-color: #fff;
+	width: 50%;
+	margin: auto;
+	padding: 20px 5px 20px 4px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.song-box .song-image {
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+}
+
+.song-box img {
+	width: 70px;
+	height: 70px;
+	min-width: 70px;
+	min-height: 70px;
+	border-radius: 50%;
+	margin-left: 15px;
+}
+
+.song-box .song-info {
+	position: absolute;
+	margin: -98px 5px 10px 110px;
+	width: 50%;
+}
+
+.invalid-song {
+	background-color: #ff3f3f;
+}
+
+.song-box .song-title {
+	font-weight: 400;
+	font-size: 20px;
+    display: inline-block;
+}
+
+.song-box .song-artist {
+	font-weight: 300;
+	font-size: 20px;
+    display: inline-block;
+}
+
+.song-box .song-length {
+	font-size: 25px;
+    display: inline-block;
+}
+
+.song-box .song-buttons {
+	color: #ccc;
+	font-size: 30px;
+	text-align: right;
+	margin: -25px 125px 5px 5px;
+
+}
+
+.song-box a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.song-box .song-button {
+	cursor: pointer;
+	margin: 5px 5px 5px 5px;
+}
+
+.song-box .song-button:hover {
+	color: #999;
+}
+
+/* Woo, mobile devices */
+@media screen and (max-device-width: 480px) {
+
+	.navbar-inverse .navbar-toggle {
+		border-color: #fff;
+	}
+
+	.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+		background-color: rgba(255, 255, 255, 0.4);
+	}
+
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		border-color: rgba(0, 0, 0, 0.2);
+	}
+
+	.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>.active>a:hover {
+		background-color: rgba(0, 0, 0, 0.2);
+		border-bottom: none;
+	}
+
+	#content-info {
+		font-size: 10px;
+	}
+
+	.content-header {
+		font-weight: 300;
+		font-size: 23px;
 	}
 
 	.song-box {

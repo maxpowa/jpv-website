@@ -14,7 +14,7 @@
 	</head>
 	
 	<body>
-		<div id="the-navbar" class="navbar navbar-inverse navbar-fixed-top synced-color" role="navigation">
+		<div id="the-navbar" class="navbar navbar-inverse navbar-fixed-top synced-bgcolor" role="navigation">
 		  <div class="container">
 			<div class="navbar-header">
 			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -36,13 +36,29 @@
 		  </div>
 		</div>
 		
-		<div id="song-list">
-			<div id="loading-doodad">
-				Loading your Music~
-				<div class="loading-subtitle">Just give me a moment, baka!</div>
+		<div id="contents">
+			<div id="content-info">
+				<div class="content-header"><a href="http://bittorrent.com/sync" class="synced-color">Bittorrent Sync</a> is your friend!</div>
+				You can use BTSync to get automated updates from this folder! Below are some links to get you started:<br>
+				<span class="btsync-link synced-color" id="btsync-key">Key</span><span class="btsync-separator"> - </span>
+				<span class="btsync-link synced-color" id="btsync-installer">Installer (use if you don't have BTSync yet!)</span><span class="btsync-separator"> - </span>
+				<span class="btsync-link synced-color" id="btsync-qr">QR Code</span>
+				
+				<div class="btsync-hidden-contents">
+					<div class="btsync-hide" id="btsync-hidden-key">Key: <b>R6OT5VERCDG3WVC4IP2W77UHNRNJQXPO5</b></div>
+					<div class="btsync-hide" id="btsync-hidden-qr"><img src="./img/qr.png"></img></div>
+					<div class="btsync-hide btsync-link synced-color" id="btsync-hide-button">(Hide)</div>
+				</div>
+			</div>
+			
+			<div id="song-list">
+				<div id="loading-doodad">
+					Loading your Music~
+					<div class="loading-subtitle">Just give me a moment, baka!</div>
+				</div>
 			</div>
 		</div>
-		<div id="player" class="synced-color"></div>
+		<div id="player" class="synced-bgcolor"></div>
 	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
