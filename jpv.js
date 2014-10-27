@@ -7,6 +7,8 @@ const colors = {
 
 var loading = '';
 
+$(function () { $("[data-toggle='tooltip']").tooltip(); });
+
 $(function() {
 	var hash = getHash('all');
 	loading = $('#song-list').html();

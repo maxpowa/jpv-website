@@ -82,7 +82,7 @@
 			$length = $song_data['length'];
 			$filename = $song_data['filename'];
 			
-			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><a href='/media$filename' target='_blank'><div class='song-button song-download-button'></div></a></div></div></div>";
+			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><a href='/media$filename' target='_blank' data-toggle='tooltip' title='You may need to right click, Save As...'><div class='song-button song-download-button'></div></a></div></div></div>";
 		}
 		
 		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
