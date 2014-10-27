@@ -118,7 +118,7 @@
      *
      */
     function check_file_age($file, $age) { 
-        return (time() - filemtime($file) >= $age) ? true : false; 
+        return (time() - filemtime($file) >= $age); 
     }
     
     function iterate_dir($dir) {
