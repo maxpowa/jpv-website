@@ -30,6 +30,7 @@ function animateNavbar(genre) {
 	$('#the-navbar').animate({
 		'background-color': colors[genre],
 	});
+	$('html, body').animate({  scrollTop: 0 }, 500);
 }
 
 function getContents(genre) {
@@ -48,11 +49,8 @@ function getContents(genre) {
 		contents = contents.replace(/song-play-button/g, 'song-play-button glyphicon glyphicon-play-circle').replace(/song-download-button/g, 'song-download-button glyphicon glyphicon-download');
 		$('#song-list').html(contents);
 		genreContents[genre] = contents;
+		resetTooltip();
 	});
-}
-
-function setGenre(genre, html) {
-	resetTooltip();
 }
 
 function resetTooltip() {
