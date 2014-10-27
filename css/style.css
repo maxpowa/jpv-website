@@ -197,5 +197,13 @@ body {
 		font-size: 12px;
 	}
 
+	#loading-doodad {
+		font-size: 30px;
+	}
+
+	.loading-subtitle {
+		font-size: 15px;
+	}
+
 
 }
