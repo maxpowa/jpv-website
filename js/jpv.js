@@ -42,9 +42,6 @@ function getContents(genre) {
 		'format': 'html'
 	}, function(resp) {
 		var contents = resp.message;
-		if(resp.status != 200)
-			contents = "Status Code " + resp.status + ": " + contents;
-		
 		animateNavbar(genre);
 		$('#song-list').html(contents);
 		genreContents[genre] = contents;
