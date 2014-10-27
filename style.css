@@ -4,13 +4,15 @@
 
 body {
   padding-top: 50px;
+  background-color: #e5e5e5;
+  overflow-y: scroll;
 }
 
-
 #the-navbar {
-	background-color: #3c3c3c;
+	background-color: #259b24;
 	background-image: none;
 	border: none;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
 .navbar-nav>li {
@@ -32,13 +34,101 @@ body {
 	border-bottom: 3px solid rgba(0, 0, 0, 0.2);
 }
 
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-nav>li>a:focus {
+	color: rgba(255, 255, 255, 0.6);
+}
+
 .navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>.active>a:hover {
 	background-color: rgba(0, 0, 0, 0.1);
 	border-bottom: 5px solid rgba(0, 0, 0, 0.2);
 }
 
+#loading-doodad {
+	font-weight: 100;
+	font-size: 60px;
+	text-align: center;
+	margin-top: 80px;
+}
 
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
+#loading-doodad img { 
+	width: 70px;
+	height: 70px;
+	margin-right: 10px;
+	margin-bottom: 8px;
+}
+
+.loading-subtitle {
+	font-size: 25px;
+}
+
+#song-list {
+	padding-top: 25px;
+}
+
+.song-box {
+	font-weight: 100;
+	background-color: #fff;
+	width: 50%;
+	margin: auto;
+	padding: 20px 5px 20px 4px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.song-box .song-image {
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+}
+
+.song-box img {
+	width: 70px;
+	height: 70px;
+	min-width: 70px;
+	min-height: 70px;
+	border-radius: 50%;
+	margin-left: 15px;
+}
+
+.song-box .song-info {
+	position: absolute;
+	margin: -98px 5px 10px 110px;
+	width: 50%;
+}
+
+.song-box .song-title {
+	font-weight: 300;
+	font-size: 30px;
+}
+
+.song-box .song-artist {
+	font-size: 20px;
+}
+
+.song-box .song-length {
+	font-size: 15px;
+}
+
+.song-box .song-buttons {
+	color: #ccc;
+	font-size: 30px;
+	text-align: right;
+	margin: -25px 125px 5px 5px;
+}
+
+.song-box .song-button {
+	margin: 5px 5px 5px 5px;
+}
+
+.song-box .song-button:hover {
+	color: #999;
+}
+
+/* Woo, mobile devices */
+@media screen and (max-device-width: 480px) {
+	.song-box, .song-box .song-info {
+		width: calc(100% - 10px);
+	}
+
 }

@@ -1,17 +1,20 @@
 const colors = {
-	'all' : '#00ff84',
-	'jpop' : '#ff9c00',
-	'vocaloid' : '#ff00de',
-	'nightcore': '#00a8ff'
+	'all' : '#259b24',
+	'jpop' : '#ffc107',
+	'vocaloid' : '#e91e63',
+	'nightcore': '#5677fc'
 };
 
-$(function() {
+var loading = '';
 
+$(function() {
 	var hash = getHash('all');
+	loading = $('#song-list').html();
 	selectAndSetContents(hash);
 });
 
 $('.nav li').click(function() {
+	$('#song-list').html(loading);
 	selectAndSetContents($(this).attr('genre'));
 });
 
@@ -33,7 +36,8 @@ function getContents(genre) {
 		var contents = resp.message;
 		if(resp.status != 200)
 			contents = "Status Code " + resp.status + ": " + contents;
-			
+		
+		contents = contents.replace(/song-play-button/g, 'song-play-button glyphicon glyphicon-play-circle').replace(/song-download-button/g, 'song-download-button glyphicon glyphicon-download');
 		$('#song-list').html(contents);
 	});
 }

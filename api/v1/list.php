@@ -13,9 +13,6 @@
     require_once('config.php');
     require_once(LIB_DIR . 'id3utils.php');
     
-	error_reporting(-1); // TODO REMOVE THIS SHIT
-  	ini_set('display_errors', 'On'); // TODO AND THIS SHIT TOO
-	
 	$format = 'json';
 	if(isset($_GET['format']))
 		$format = $_GET['format'];
@@ -51,20 +48,12 @@
 				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true), 'From CACHED_LIST'));
 			else {
 				$size = filesize($CACHED_LIST);
-				header("Content-Length: $size");
+				header("Content-Length: $size bytes");
 				readfile($CACHED_LIST);
 			}
 			return;
 		} else {
-			$dir = MEDIA_DIR . ($genre == 'all' ? '' : $genre);
-			if(!file_exists($dir))
-			{
-				header("Status-Code: 200");
-				header('Content-Type: application/json');
-				echo '{"status":"400", "message":"genre \'' . $genre . '\' does not exist"}';
-				return;
-			}
-			iterate_dir($dir);
+			iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
 			header('Content-Type: application/json');
 			$time = time();
 			$json_list = json_encode($INFO_LIST);
@@ -91,9 +80,10 @@
 			$artist = $song_data['artist'];
 			$album = $song_data['album'];
 			$length = $song_data['length'];
-			$href = $song_data['filename'];
+			$filename = $song_data['filename'];
+			$image = urlencode($filename);
 			
-			$html = "$html<div class='song-box' href='$href'><h1>$title</h1><h2>$artist</h2></h3>$length</h3></div>";
+			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><div class='song-button song-download-button'></div></div></div></div>";
 		}
 		
 		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
@@ -107,7 +97,7 @@
             header("Status-Code: 200");
             header('Content-Type: application/json');
             $size = filesize($CACHED_LIST);
-            header("Content-Length: $size");
+            header("Content-Length: $size bytes");
             readfile($CACHED_LIST);
             return;
         } else {
@@ -126,10 +116,18 @@
      *
      */
     function check_file_age($file, $age) {
-		return (time() - filemtime($file) >= $age) ? true : false;
+        $now = time();
+        $filetime = filemtime($file);
+        if(($now - $filetime) >= $age){
+            return true;
+        } 
+        return false;
     }
     
     function iterate_dir($dir) {
+		if(!file_exists($dir))
+			return;
+	
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
