@@ -22,7 +22,7 @@ body {
 }
 
 .navbar-nav>li {
-	width: 100px;
+	min-width: 120px;
 	text-align: center;
 }
 
@@ -129,6 +129,7 @@ body {
 	font-size: 30px;
 	text-align: right;
 	margin: -25px 125px 5px 5px;
+
 }
 
 .song-box .song-button {
@@ -141,8 +142,60 @@ body {
 
 /* Woo, mobile devices */
 @media screen and (max-device-width: 480px) {
-	.song-box, .song-box .song-info {
+
+	.navbar-inverse .navbar-toggle {
+		border-color: #fff;
+	}
+
+	.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+		background-color: rgba(255, 255, 255, 0.4);
+	}
+
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		border-color: rgba(0, 0, 0, 0.2);
+	}
+
+	.song-box {
 		width: calc(100% - 10px);
 	}
+
+	.song-box .song-image {
+		width: 70px;
+	}
+
+	.song-box img {
+		width: 50px;
+		height: 50px;
+		min-width: 50px;
+		min-height: 50px;
+		border-radius: 50%;
+		margin-left: 5px;
+	}
+
+	.song-box {
+		white-space: nowrap;
+	}
+
+	.song-box .song-info {
+		position: absolute;
+		margin-left: 70px;
+	}
+
+	.song-box .song-buttons {
+		margin: 0px 0px 5px calc(100% - 20px);
+	}
+
+	.song-box .song-title {
+		font-size: 10px;
+	}
+
+	.song-box .song-artist {
+		font-size: 10px;
+	}
+
+	.song-box .song-length {
+		font-size: 12px;
+	}
+
 
 }
