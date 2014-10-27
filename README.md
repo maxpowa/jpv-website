@@ -1,6 +1,12 @@
-This repo is the new home for the source that makes the jpv site run!
+Beta site to replace http://jpv.everythingisawesome.us/
 
-It does not contain the current site, but instead the site that will be implemented in the near future.
+[Test Site](http://test.everythingisawesome.us) (updated whenever Vazkii or maxpowa are around)
 
+Requirements:
+  - PHP 5.4+
+  - PHP-GD
+  - getId3() support lib on windows xampp/etc
 
-Feel free to help out and make the site better!
+Configuring: [config.php](https://github.com/maxpowa/jpv-website/blob/master/config.php)
+
+[API Documentation](https://github.com/maxpowa/jpv-website/wiki/API-Documentation)
