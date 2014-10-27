@@ -83,13 +83,27 @@
             $albumartist = encode_entities($song_data['album_artist']);
 			$album = encode_entities($song_data['album']);
 			$length =  encode_entities($song_data['length']);
+			
 			$filename = $song_data['filename'];
+			$parsed_filename = str_replace('.mp3', '', urldecode($filename));
+			$parsed_filename = substr($parsed_filename, strpos($parsed_filename, '/') + 1);
+			$filename_tokens = explode(' - ', $parsed_filename);
+			
+			if(empty($title))
+				$title = $filename_tokens[1];
+			if(empty($artist))
+				$artist = $filename_tokens[0];
+			if(empty($albumartist))
+				$albumartist = $artist;
+			if(empty($album))	
+				$album = "$artist - $title - Single";
+			if(empty($length))
+				$length = 'N/A';
 			
 			$html = "$html<div class='song-box'><div class='song-image' data-toggle='tooltip' title='$album'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><br /><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br /><div class='song-length'>$length</div><br /><div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a></div></div></div>";
 		}
 		
-		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
-		return $html;
+		return "{\"status\":\"200\", \"message\":\"$html\"}";
 	}
     
     function cache_check($genre) {
