@@ -46,7 +46,6 @@ function getContents(genre) {
 			contents = "Status Code " + resp.status + ": " + contents;
 		
 		animateNavbar(genre);
-		contents = contents.replace(/song-play-button/g, 'song-play-button glyphicon glyphicon-play-circle').replace(/song-download-button/g, 'song-download-button glyphicon glyphicon-download');
 		$('#song-list').html(contents);
 		genreContents[genre] = contents;
 		resetTooltip();
