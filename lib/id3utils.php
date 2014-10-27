@@ -26,8 +26,10 @@
 			mkdir($ART_DIR);
 
         if ( file_exists( $CACHE_FILE ) ) {
+            header("X-Cache: hit");
             return $CACHE_FILE;
         } else {
+            header("X-Cache: miss");
             $getID3 = new getID3;
             #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
             $getID3->analyze($filename);
