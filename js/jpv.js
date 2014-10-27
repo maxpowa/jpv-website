@@ -31,9 +31,10 @@ function selectAndSetContents(genre) {
 }
 
 function getContents(genre) {
-	if(genre in genreContents)
+	if(genre in genreContents) {
 		$('#song-list').html(genreContents[genre]);
-	else $.get('./api/v1/list.php', {
+		resetTooltip();
+	} else $.get('./api/v1/list.php', {
 		'genre': genre,
 		'format': 'html'
 	}, function(resp) {
