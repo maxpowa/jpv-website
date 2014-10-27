@@ -65,7 +65,9 @@
 			else echo($output);
 		}
     }
-
+    
+    function encode_entities($string) { return htmlspecialchars($string, ENT_QUOTES | ENT_HTML401); }
+    
 	function get_jpv_html($list, $error_info) {		
 		if($list == null) {
 			header("Status-Code: 500");
@@ -76,13 +78,14 @@
 		$html = '';
 		
 		foreach($list as $song_data) {
-			$title = $song_data['title'];
-			$artist = $song_data['artist'];
-			$album = $song_data['album'];
-			$length = $song_data['length'];
+			$title = encode_entities($song_data['title']);
+			$artist = encode_entities($song_data['artist']);
+            $albumartist = encode_entities($song_data['album_artist']);
+			$album = encode_entities($song_data['album']);
+			$length =  encode_entities($song_data['length']);
 			$filename = $song_data['filename'];
 			
-			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><a href='/media$filename' target='_blank' data-toggle='tooltip' title='You may need to right click, Save As...'><div class='song-button song-download-button'></div></a></div></div></div>";
+			$html = "$html<div class='song-box'><div class='song-image' data-toggle='tooltip' title='$album'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><a href='/media$filename' target='_blank' data-toggle='tooltip' title='You may need to right click, Save As...'><div class='song-button song-download-button'></div></a></div></div></div>";
 		}
 		
 		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
