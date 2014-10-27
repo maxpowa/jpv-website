@@ -113,6 +113,7 @@
 				$image = "./api/v1/art.php?file=invalid";
 				$buttons = '';
 				$classes .= ' invalid-song';
+				$albumartist = 'Whatcha looking at?';
 			}
 			
 			
