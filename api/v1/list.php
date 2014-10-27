@@ -126,6 +126,9 @@
     function iterate_dir($dir) {
 		if(!file_exists($dir) or !is_dir($dir))
 			return;
+        
+        if(strpos($dir,'.sync') !== false)
+            return;
 	
         $files = scandir($dir);
         sort($files);
