@@ -85,7 +85,7 @@
 			$length =  encode_entities($song_data['length']);
 			$filename = $song_data['filename'];
 			
-			$html = "$html<div class='song-box'><div class='song-image' data-toggle='tooltip' title='$album'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><br /><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br /><div class='song-length'>$length</div><br /><div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle'></div><a href='./media/$filename' download><div class='song-button song-download-button glyphicon glyphicon-download'></div></a></div></div></div>";
+			$html = "$html<div class='song-box'><div class='song-image' data-toggle='tooltip' title='$album'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><br /><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br /><div class='song-length'>$length</div><br /><div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a></div></div></div>";
 		}
 		
 		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
