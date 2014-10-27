@@ -7,6 +7,7 @@ const colors = {
 
 var genreContents = { };
 var loading = '';
+var currentPlaying;
 
 $(function() {
 	resetTooltip();
@@ -20,11 +21,42 @@ $('.nav li').click(function() {
 	selectAndSetContents($(this).attr('genre'));
 });
 
+$(document).on('click', '.song-play-button', function() {
+	var dl = $(this).parent('div').find('a').attr('href');	
+	var parent = $(this).closest('.song-box');
+	var title = parent.find('.song-title').text();
+	
+	var artist = parent.find('.song-artist').text();
+	var albumArtist = parent.find('.song-artist').attr('data-original-title');
+	var displayArtist = artist;
+	if(artist != albumArtist)
+		displayArtist = artist + " / " + albumArtist;
+
+	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio controls autoplay><source src="' + dl + '" type="audio/mpeg"></audio>';
+	
+	if(currentPlaying != undefined)
+		currentPlaying.animate({
+			'background-color': '#fff',
+		});
+	
+	parent.animate({
+		'background-color': '#dff',
+	});
+	currentPlaying = parent;
+	
+	var player = $('#player');	
+	player.html(audio);
+	if(player.css('display') == 'none')
+		player.show(600);
+	resetTooltip();
+});
+
 function selectAndSetContents(genre) {
 	getContents(genre);
-	$('#the-navbar').animate({
+	$('.synced-color').animate({
 		'background-color': colors[genre],
 	});
+
 	$('html, body').animate({  scrollTop: 0 }, 500);
 	$('.nav li').removeClass('active');
 	$('.nav li[genre=' +  genre + ']').addClass('active');
