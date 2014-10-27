@@ -48,7 +48,7 @@
 				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true), 'From CACHED_LIST'));
 			else {
 				$size = filesize($CACHED_LIST);
-				header("Content-Length: $size bytes");
+				header("Content-Length: $size");
 				readfile($CACHED_LIST);
 			}
 			return;
@@ -81,9 +81,9 @@
 			$album = $song_data['album'];
 			$length = $song_data['length'];
 			$filename = $song_data['filename'];
-			$image = urlencode($filename);
+			$image = str_replace('%2F', '/', rawurlencode($filename));
 			
-			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><div class='song-button song-download-button'></div></div></div></div>";
+			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$image'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><div class='song-button song-download-button'></div></div></div></div>";
 		}
 		
 		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
@@ -97,7 +97,7 @@
             header("Status-Code: 200");
             header('Content-Type: application/json');
             $size = filesize($CACHED_LIST);
-            header("Content-Length: $size bytes");
+            header("Content-Length: $size");
             readfile($CACHED_LIST);
             return;
         } else {
