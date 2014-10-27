@@ -12,32 +12,37 @@
     
     require_once('config.php');
     require_once(LIB_DIR . 'id3utils.php');
-    
+	
 	$format = 'json';
 	if(isset($_GET['format']))
 		$format = $_GET['format'];
 	
-	if($format != 'json' && $format != 'html') {
-	    header("Status-Code: 400");
-        header('Content-Type: application/json');
-        echo '{"status":"400", "message":"\'format\' parameter (\''.$format.'\') is invalid"}';
-        return;
-	}	
+	if($format != 'json' && $format != 'html')
+		error('400', 'Bad Request', '\'format\' parameter (\''.$format.'\') is invalid.');
 	
-    if (isset( $_GET[ 'genre' ])) {
+    if(isset($_GET['genre'])) {
         get_genre_tracks(strip_tags(trim($_GET['genre'])));
-    } else {
-        header("Status-Code: 400");
-        header('Content-Type: application/json');
-        echo '{"status":"400", "message":"\'genre\' parameter not provided"}';
-        return;
-    }
+    } else
+		error('400', 'Bad Request', '\'genre\' parameter not provided.');
     
     $INFO_LIST = array();
     
     function get_genre_tracks($genre) {
         global $INFO_LIST;
 		global $format;
+		
+		if($genre != 'all') {
+			$valid = false;
+			$files = scandir(MEDIA_DIR);
+			foreach($files as $file)
+				if(is_dir(MEDIA_DIR . $file) && $genre == $file) {
+					$valid = true;
+					break;
+				}
+						
+			if(!$valid)
+				error('400', 'Bad Request', '\'genre\' parameter (\'' . $genre . '\') is invalid.');
+		}
 		
 		$CACHED_LIST = CACHE_DIR . $genre . '.json';
 		if (file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST , 3600)) {
@@ -66,14 +71,13 @@
 		}
     }
     
-    function encode_entities($string) { return htmlspecialchars($string, ENT_QUOTES | ENT_HTML401); }
+    function encode_entities($string) { 
+		return htmlspecialchars($string, ENT_QUOTES | ENT_HTML401);
+	}
     
 	function get_jpv_html($list, $error_info) {		
-		if($list == null) {
-			header("Status-Code: 500");
-			header('Content-Type: application/json');
-			return '{"status":"500", "message":"<div class=\'song-box invalid-song\'><div class=\'song-image\'><img src=\"./img/error.jpg\"></img></div><div class=\'song-info\'><div class=\'song-title\'>Internal Server Error</div><br /><div class=\'song-artist\'>Song list is null (' . $error_info . ')</div></div></div>"}';
-		}
+		if($list == null)
+			error('500', 'Internal Server Error', 'Song list is null (' . $error_info . ')');
 	
 		$html = '';
 		
@@ -116,6 +120,13 @@
 		}
 		
 		return "{\"status\":\"200\", \"message\":\"$html\"}";
+	}
+	
+	function error($status, $errorstr, $message) {
+			header("Status-Code: $status");
+			header('Content-Type: application/json');
+			echo('{"status":"' . $status . '", "message":"<div class=\'song-box invalid-song\'><div class=\'song-image\'><img src=\"./img/error.jpg\"></img></div><div class=\'song-info\'><div class=\'song-title\'>HTTP ' . $status . ': ' . $errorstr . '</div><br><div class=\'song-artist\'>' . $message . '</div></div></div>"}');
+			exit;
 	}
     
     function cache_check($genre) {
