@@ -124,7 +124,7 @@
     }
     
     function iterate_dir($dir) {
-		if(!file_exists($dir))
+		if(!file_exists($dir) or !is_dir($dir))
 			return;
 	
         $files = scandir($dir);
