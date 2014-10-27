@@ -2,6 +2,12 @@
 	font-family: 'Roboto', sans-serif;
 }
 
+a { 
+  color: inherit;
+  text-decoration: none;
+  cursor:pointer; 
+} 
+
 body {
   padding-top: 50px;
   background-color: #e5e5e5;
