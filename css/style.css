@@ -103,6 +103,10 @@ body {
 	width: 50%;
 }
 
+.invalid-song {
+	background-color: #ff3f3f;
+}
+
 .song-box .song-title {
 	font-weight: 400;
 	font-size: 20px;

@@ -88,11 +88,12 @@
 			$parsed_filename = str_replace('.mp3', '', urldecode($filename));
 			$parsed_filename = substr($parsed_filename, strpos($parsed_filename, '/') + 1);
 			$filename_tokens = explode(' - ', $parsed_filename);
+			$valid = sizeof($filename_tokens) > 1;
 			
 			if(empty($title))
-				$title = $filename_tokens[1];
+				$title = $valid ? trim($filename_tokens[sizeof($filename_tokens) - 1]) : 'This song is not available D:';
 			if(empty($artist))
-				$artist = $filename_tokens[0];
+				$artist = $valid ? trim($filename_tokens[0]) : 'Please annoy us so we can fix it!';
 			if(empty($albumartist))
 				$albumartist = $artist;
 			if(empty($album))	
@@ -100,7 +101,18 @@
 			if(empty($length))
 				$length = 'N/A';
 			
-			$html = "$html<div class='song-box'><div class='song-image' data-toggle='tooltip' title='$album'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><br /><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br /><div class='song-length'>$length</div><br /><div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a></div></div></div>";
+			$image = "./api/v1/art.php?file=$filename";
+			$classes = 'song-box';
+			$buttons = "<div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a></div>";
+			
+			if(!$valid)	{
+				$image = "./api/v1/art.php?file=invalid";
+				$buttons = '';
+				$classes .= ' invalid-song';
+			}
+			
+			
+			$html .= "<div class='$classes'><div class='song-image' data-toggle='tooltip' title='$album'><img src='$image'></img></div><div class='song-info'><div class='song-title'>$title</div><br><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br><div class='song-length'>$length</div><br>$buttons</div></div>";
 		}
 		
 		return "{\"status\":\"200\", \"message\":\"$html\"}";

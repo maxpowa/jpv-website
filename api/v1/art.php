@@ -12,11 +12,15 @@
     require_once('config.php');
     require_once(LIB_DIR . 'id3utils.php');
 	
-	define('FALLBACK_IMAGE', 'song-fallback.png');
-		
+	define('FALLBACK_IMAGE', './img/song-fallback.png');
+	define('INVALID_IMAGE', './img/song-invalid.png');
+
     if(isset($_GET['file'])) {
         $filename = realpath(MEDIA_DIR . strip_tags(trim($_GET['file'])));
     } else fallback();
+  
+	if($_GET['file'] == 'invalid')
+		invalid();
   
 	if(file_exists($filename) && is_file($filename)) {
         $FILE = get_art($filename);
@@ -33,9 +37,17 @@
     fallback();
 	
 	function fallback() {
+	    fallbackTo(FALLBACK_IMAGE);
+	}
+	
+	function invalid() {
+		fallbackTo(INVALID_IMAGE);
+	}
+	
+	function fallbackTo($img) {
 	    header("Content-Type: image/png");
         header("Status-Code: 400");
-        header("Content-Length: " . filesize(FALLBACK_IMAGE));
-		echo file_get_contents(FALLBACK_IMAGE);
+        header("Content-Length: " . filesize($img));
+		echo file_get_contents($img);
 		exit;
 	}

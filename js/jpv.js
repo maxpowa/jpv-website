@@ -22,22 +22,18 @@ $('.nav li').click(function() {
 
 function selectAndSetContents(genre) {
 	getContents(genre);
-	$('.nav li').removeClass('active');
-	$('.nav li[genre=' +  genre + ']').addClass('active');
-}
-
-function animateNavbar(genre) {
 	$('#the-navbar').animate({
 		'background-color': colors[genre],
 	});
 	$('html, body').animate({  scrollTop: 0 }, 500);
+	$('.nav li').removeClass('active');
+	$('.nav li[genre=' +  genre + ']').addClass('active');
 }
 
 function getContents(genre) {
-	if(genre in genreContents) {
+	if(genre in genreContents)
 		$('#song-list').html(genreContents[genre]);
-		animateNavbar(genre);
-	} else $.get('./api/v1/list.php', {
+	else $.get('./api/v1/list.php', {
 		'genre': genre,
 		'format': 'html'
 	}, function(resp) {
@@ -45,7 +41,6 @@ function getContents(genre) {
 		if(resp.status != 200)
 			contents = "Status Code " + resp.status + ": " + contents;
 		
-		animateNavbar(genre);
 		$('#song-list').html(contents);
 		genreContents[genre] = contents;
 		resetTooltip();
