@@ -13,9 +13,6 @@
     require_once('config.php');
     require_once(LIB_DIR . 'id3utils.php');
     
-	error_reporting(-1); // TODO REMOVE THIS SHIT
-  	ini_set('display_errors', 'On'); // TODO AND THIS SHIT TOO
-	
 	$format = 'json';
 	if(isset($_GET['format']))
 		$format = $_GET['format'];
@@ -27,8 +24,8 @@
         return;
 	}	
 	
-    if ( isset( $_GET[ 'genre' ] ) ) {
-        get_genre_tracks( strip_tags( trim( $_GET[ 'genre' ] ) ) );
+    if (isset( $_GET[ 'genre' ])) {
+        get_genre_tracks(strip_tags(trim($_GET['genre'])));
     } else {
         header("Status-Code: 400");
         header('Content-Type: application/json');
@@ -45,11 +42,10 @@
 		$CACHED_LIST = CACHE_DIR . $genre . '.json';
 		if (file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST , 3600)) {
 			header("Status-Code: 200");
-			
-			header(content_type());
+			header('Content-Type: application/json');
 
 			if($format == 'html')
-				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true)));
+				echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true), 'From CACHED_LIST'));
 			else {
 				$size = filesize($CACHED_LIST);
 				header("Content-Length: $size bytes");
@@ -58,24 +54,25 @@
 			return;
 		} else {
 			iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
-			header(content_type());
+			header('Content-Type: application/json');
 			$time = time();
 			$json_list = json_encode($INFO_LIST);
+			$output = "{\"status\":\"200\", \"message\":\"$json_list\"}";
 			file_put_contents($CACHED_LIST , $json_list);
-			header("Content-Length: $size bytes");
-			
+
 			if($format == 'html')
-				echo(get_jpv_html($INFO_LIST));
-			else echo($json_list);
+				echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
+			else echo($output);
 		}
     }
+
+	function get_jpv_html($list, $error_info) {		
+		if($list == null) {
+			header("Status-Code: 500");
+			header('Content-Type: application/json');
+			return '{"status":"500", "message":"Internal Server Error: invalid genre. ' . $error_info . '"}';
+		}
 	
-	function content_type() {
-		global $format;
-		return $format == 'html' ? 'Content-Type: text/plain' : 'Content-Type: application/json';
-	}
-	
-	function get_jpv_html($list) {
 		$html = '';
 		
 		foreach($list as $song_data) {
@@ -83,24 +80,25 @@
 			$artist = $song_data['artist'];
 			$album = $song_data['album'];
 			$length = $song_data['length'];
-			$href = $song_data['filename'];
+			$filename = $song_data['filename'];
+			$image = urlencode($filename);
 			
-			$html = "$html<song-box title='$title' artist='$artist' album='$album' length='$length' href='$href'></song-box>";
+			$html = "$html<div class='song-box'><div class='song-image'><img src='./api/v1/art.php?file=$filename'></img></div><div class='song-info'><div class='song-title'>$title</div><div class='song-artist'>$artist</div><div class='song-length'>$length</div><div class='song-buttons'><div class='song-button song-play-button'></div><div class='song-button song-download-button'></div></div></div></div>";
 		}
 		
-		echo($html);
+		$html = "{\"status\":\"200\", \"message\":\"$html\"}";
 		return $html;
 	}
     
     function cache_check($genre) {
         global $INFO_LIST;
         $CACHED_LIST = CACHE_DIR . $genre . '.json';
-        if ( file_exists( $CACHED_LIST ) && !check_file_age( $CACHED_LIST , 3600 )  ) {
+        if(file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST, 3600)) {
             header("Status-Code: 200");
             header('Content-Type: application/json');
-            $size= filesize( $CACHED_LIST );
+            $size = filesize($CACHED_LIST);
             header("Content-Length: $size bytes");
-            readfile( $CACHED_LIST );
+            readfile($CACHED_LIST);
             return;
         } else {
             iterate_dir( MEDIA_DIR . $genre );
@@ -108,7 +106,7 @@
             $time = time();
             $output = "{\"last-modified\":\"$time\",\"songs\":".json_encode($INFO_LIST).'}';
             echo($output);
-            file_put_contents( $CACHED_LIST , $output );
+            file_put_contents($CACHED_LIST , $output);
         }
     }
     
@@ -127,6 +125,9 @@
     }
     
     function iterate_dir($dir) {
+		if(!file_exists($dir))
+			return;
+	
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
@@ -135,7 +136,7 @@
                 if(strpos($file, '.') == 0) {
                     iterate_dir($href);
                 } else {
-                    build_json($file, str_replace( MEDIA_DIR , '' , $href ));
+                    build_json($file, str_replace(MEDIA_DIR , '' , $href));
                 }
             }	
         }
@@ -143,6 +144,6 @@
     
     function build_json($filename, $rel_path) {
         global $INFO_LIST;
-        $INFO_FILE = get_info( MEDIA_DIR . $rel_path);
-		$INFO_LIST[] = json_decode(file_get_contents($INFO_FILE));
+        $INFO_FILE = get_info(MEDIA_DIR . $rel_path);
+		$INFO_LIST[] = json_decode(file_get_contents($INFO_FILE), true);
 	}
