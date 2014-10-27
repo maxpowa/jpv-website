@@ -142,3 +142,11 @@ body {
 	}
 
 }
+
+.error-box {
+    background-color: #e84e40;
+}
+
+.error-box .error-subtitle {
+    font-weight: 300;
+}
