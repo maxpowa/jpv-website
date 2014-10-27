@@ -72,7 +72,7 @@
 		if($list == null) {
 			header("Status-Code: 500");
 			header('Content-Type: application/json');
-			return '{"status":"500", "message":"Internal Server Error: invalid genre. ' . $error_info . '"}';
+			return '{"status":"500", "message":"<div class=\'song-box invalid-song\'><div class=\'song-image\'><img src=\"./img/error.jpg\"></img></div><div class=\'song-info\'><div class=\'song-title\'>Internal Server Error</div><br /><div class=\'song-artist\'>Song list is null (' . $error_info . ')</div></div></div>"}';
 		}
 	
 		$html = '';
