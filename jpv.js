@@ -7,7 +7,11 @@ const colors = {
 
 var loading = '';
 
-$(function () { $("[data-toggle='tooltip']").tooltip(); });
+$(
+create_tooltips();
+);
+
+function create_tooltips() { $("[data-toggle='tooltip']").tooltip(); }
 
 $(function() {
 	var hash = getHash('all');
@@ -41,6 +45,7 @@ function getContents(genre) {
 		
 		contents = contents.replace(/song-play-button/g, 'song-play-button glyphicon glyphicon-play-circle').replace(/song-download-button/g, 'song-download-button glyphicon glyphicon-download');
 		$('#song-list').html(contents);
+        create_tooltips();
 	});
 }
 
