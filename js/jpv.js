@@ -28,6 +28,7 @@ function selectAndSetContents(genre) {
 	$('html, body').animate({  scrollTop: 0 }, 500);
 	$('.nav li').removeClass('active');
 	$('.nav li[genre=' +  genre + ']').addClass('active');
+	document.title = $('.nav li[genre=' +  genre + ']').attr('title') + ' | JPV Playlist';
 }
 
 function getContents(genre) {
