@@ -26,11 +26,11 @@
 		}
         $existing = file_get_contents(MEDIA_DIR . $name);
         if (strcmp($existing, $current_list) == 0) {
-            echo("Skipped. (UP-TO-DATE)")
+            echo("Skipped. (UP-TO-DATE)");
             return;
         }
 		file_put_contents(MEDIA_DIR . $name, $current_list);
-        echo("<br />")
+        echo("<br />");
 	}
 	
 	function iterate_dir($dir, $current_list, $exclusions) {
