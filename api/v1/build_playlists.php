@@ -25,7 +25,7 @@
 			else $current_list = iterate_dir(MEDIA_DIR . $file, $current_list, $exclusions);
 		}
         $existing = file_get_contents(MEDIA_DIR . $name);
-        if strcmp($existing, $current_list) == 0 {
+        if (strcmp($existing, $current_list) == 0) {
             return;
         }
 		file_put_contents(MEDIA_DIR . $name, $current_list);
