@@ -54,7 +54,7 @@ $(document).on('click', '.song-play-button', function() {
 });
 
 $(".navbar-toggle").click(function() {
-	if($("#icon-bar0").css("width") == "13px") {
+	if($("#icon-bar0").css("width") == "12px") {
 		$("#icon-bar0").animate({
 			"textIndent": "0",
 			"width": "22px",
@@ -62,7 +62,14 @@ $(".navbar-toggle").click(function() {
 			"margin-left": "0px",
 			"margin-bottom": "-0px"
 		}, {
-			duration: 400, 
+			duration: 300, 
+			step: applyRotation
+		});
+		
+		$("#icon-bar1").animate({
+			"width": "22px",
+		}, {
+			duration: 300, 
 			step: applyRotation
 		});
 	
@@ -72,28 +79,35 @@ $(".navbar-toggle").click(function() {
 			"margin-left": "0px",
 			"margin-top": "4px"
 		}, {
-			duration: 400, 
+			duration: 300, 
 			step: applyRotation
 		});
 	} else {
 		$("#icon-bar0").animate({
-			"textIndent": "135",
-			"width": "13px",
+			"textIndent": "-45",
+			"width": "12px",
 			"margin-top": "2px",
 			"margin-left": "-2px",
 			"margin-bottom": "-2px"
 		}, {
-			duration: 400, 
+			duration: 300, 
 			step: applyRotation
 		});
-	
+
+		$("#icon-bar1").animate({
+			"width": "18px",
+		}, {
+			duration: 300, 
+			step: applyRotation
+		});
+		
 		$("#icon-bar2").animate({
 			"textIndent": "45",
-			"width": "13px",
+			"width": "12px",
 			"margin-left": "-2px",
 			"margin-top": "2px"
 		}, {
-			duration: 400, 
+			duration: 300, 
 			step: applyRotation
 		});
 	}
