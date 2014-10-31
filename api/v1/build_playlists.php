@@ -17,7 +17,7 @@
 		$exclusions = $playlist_array['exclude'];
 		$current_list = "# $comment";
 		
-		echo("Building $name...<br>");		
+		echo("Building $name...");		
 		
 		foreach($inclusions as $file) {
 			if(strpos($file, '.mp3') != 0)
@@ -26,9 +26,11 @@
 		}
         $existing = file_get_contents(MEDIA_DIR . $name);
         if (strcmp($existing, $current_list) == 0) {
+            echo("Skipped. (UP-TO-DATE)")
             return;
         }
 		file_put_contents(MEDIA_DIR . $name, $current_list);
+        echo("<br />")
 	}
 	
 	function iterate_dir($dir, $current_list, $exclusions) {
