@@ -9,6 +9,8 @@ var genreContents = { };
 var loading = '';
 var currentPlaying;
 
+var hamburgerCss = { };
+
 $(function() {
 	resetTooltip();
 	var hash = getHash('all');
@@ -51,6 +53,57 @@ $(document).on('click', '.song-play-button', function() {
 	resetTooltip();
 });
 
+$(".navbar-toggle").click(function() {
+	if($("#icon-bar0").css("width") == "13px") {
+		$("#icon-bar0").animate({
+			"textIndent": "0",
+			"width": "22px",
+			"margin-top": "0px",
+			"margin-left": "0px",
+			"margin-bottom": "-0px"
+		}, {
+			duration: 400, 
+			step: applyRotation
+		});
+	
+		$("#icon-bar2").animate({
+			"textIndent": "0",
+			"width": "22px",
+			"margin-left": "0px",
+			"margin-top": "4px"
+		}, {
+			duration: 400, 
+			step: applyRotation
+		});
+	} else {
+		$("#icon-bar0").animate({
+			"textIndent": "135",
+			"width": "13px",
+			"margin-top": "2px",
+			"margin-left": "-2px",
+			"margin-bottom": "-2px"
+		}, {
+			duration: 400, 
+			step: applyRotation
+		});
+	
+		$("#icon-bar2").animate({
+			"textIndent": "45",
+			"width": "13px",
+			"margin-left": "-2px",
+			"margin-top": "2px"
+		}, {
+			duration: 400, 
+			step: applyRotation
+		});
+	}
+});
+
+function applyRotation(now, tween) {
+	if(tween.prop == "textIndent")
+		$(this).css({ "transform": "rotate(" + now + "deg)" });
+}
+
 $('#btsync-key').click(function() {
 	$('#btsync-hide-button').show(600);
 	$('#btsync-hidden-key').show(600);
@@ -85,7 +138,7 @@ function selectAndSetContents(genre) {
 	$('html, body').animate({  scrollTop: 0 }, 500);
 	$('.nav li').removeClass('active');
 	$('.nav li[genre=' +  genre + ']').addClass('active');
-	document.title = $('.nav li[genre=' +  genre + ']').attr('title') + ' | JPV Playlist';
+	document.title = $('.nav li[genre=' +  genre + ']').attr('title') + ' | JPV Music Library';
 	
 	if(genre == 'all')
 		$('#content-info').show(600);
