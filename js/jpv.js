@@ -8,6 +8,7 @@ const colors = {
 var genreContents = { };
 var loading = '';
 var currentPlaying;
+var volume = 1.0;
 
 var hamburgerCss = { };
 
@@ -48,6 +49,11 @@ $(document).on('click', '.song-play-button', function() {
 	currentPlaying = parent;
 	
 	player.html(audio);
+    var htmlPlayer = player.find('audio')[0];
+    htmlPlayer.volume = volume;
+    htmlPlayer.onvolumechange = function() {
+        volume = arguments[0].target.volume;
+    };
 	if(player.css('display') == 'none')
 		player.show(600);
 	resetTooltip();
