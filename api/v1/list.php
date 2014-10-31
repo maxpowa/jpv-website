@@ -163,19 +163,17 @@
 		if(!file_exists($dir) or !is_dir($dir))
 			return;
         
-        if(strpos($dir,'.sync') !== false)
+        if(strpos($dir,'.sync') != 0)
             return;
 	
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
-            if(strlen($file) > 2 && (strpos($file, '.mp3') != 0 || strpos($file, '.') == 0)) {
+            if(strlen($file) > 2 && ((strpos($file, '.mp3') != 0 && strpos($file, '!sync') == 0) || strpos($file, '.') == 0)) {
                 $href = "$dir/$file";
-                if(strpos($file, '.') == 0) {
+                if(strpos($file, '.') == 0)
                     iterate_dir($href);
-                } else {
-                    build_json($file, str_replace(MEDIA_DIR , '' , $href));
-                }
+                else build_json($file, str_replace(MEDIA_DIR , '' , $href));
             }	
         }
     }
