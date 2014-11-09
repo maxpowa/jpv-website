@@ -107,7 +107,7 @@
 				$length = 'N/A';
 			
 			
-			$info_loc = url_encode("$artist  - $title");
+			$info_loc = urlencode("$artist  - $title");
 			$image = "./api/v1/art.php?file=$filename";
 			$classes = 'song-box';
 			$buttons = "<div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a><a href='./song/?genre=$genre&song=$info_loc' target='_blank' data-toggle='tooltip' title='Song Info'><div class='song-button  glyphicon glyphicon-info-sign'></div></a></div>";
