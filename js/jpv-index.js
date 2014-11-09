@@ -1,16 +1,7 @@
-const colors = {
-	'all' : '#259b24',
-	'jpop' : '#ffc107',
-	'vocaloid' : '#e91e63',
-	'nightcore': '#5677fc'
-};
-
 var genreContents = { };
 var loading = '';
 var currentPlaying;
 var volume = 1.0;
-
-var hamburgerCss = { };
 
 $(function() {
 	resetTooltip();
@@ -59,69 +50,19 @@ $(document).on('click', '.song-play-button', function() {
 	resetTooltip();
 });
 
-$(".navbar-toggle").click(function() {
-	if($("#icon-bar0").css("width") == "12px") {
-		$("#icon-bar0").animate({
-			"textIndent": "0",
-			"width": "22px",
-			"margin-top": "0px",
-			"margin-left": "0px",
-			"margin-bottom": "-0px"
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-		
-		$("#icon-bar1").animate({
-			"width": "22px",
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-	
-		$("#icon-bar2").animate({
-			"textIndent": "0",
-			"width": "22px",
-			"margin-left": "0px",
-			"margin-top": "4px"
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-	} else {
-		$("#icon-bar0").animate({
-			"textIndent": "-45",
-			"width": "12px",
-			"margin-top": "2px",
-			"margin-left": "-2px",
-			"margin-bottom": "-2px"
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-
-		$("#icon-bar1").animate({
-			"width": "18px",
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-		
-		$("#icon-bar2").animate({
-			"textIndent": "45",
-			"width": "12px",
-			"margin-left": "-2px",
-			"margin-top": "2px"
-		}, {
-			duration: 300, 
-			step: applyRotation
-		});
-	}
-});
-
-function applyRotation(now, tween) {
-	if(tween.prop == "textIndent")
-		$(this).css({ "transform": "rotate(" + now + "deg)" });
+function getContents(genre) {
+	if(genre in genreContents) {
+		$('#song-list').html(genreContents[genre]);
+		resetTooltip();
+	} else $.get('./api/v1/list.php', {
+		'genre': genre,
+		'format': 'html'
+	}, function(resp) {
+		var contents = resp.message;
+		$('#song-list').html(contents);
+		genreContents[genre] = contents;
+		resetTooltip();
+	});
 }
 
 $('#btsync-key').click(function() {
@@ -146,15 +87,11 @@ $('#btsync-hide-button').click(function() {
 	$('#btsync-hidden-qr').hide(600);
 });
 
-function selectAndSetContents(genre) {
+setContentsStartCallback = function(genre) {
 	getContents(genre);
-	$('.synced-bgcolor').animate({
-		'background-color': colors[genre],
-	});
-	$('.synced-color').animate({
-		'color': colors[genre],
-	});
+};
 
+setContentsEndCallback = function(genre) {
 	$('html, body').animate({  scrollTop: 0 }, 500);
 	$('.nav li').removeClass('active');
 	$('.nav li[genre=' +  genre + ']').addClass('active');
@@ -163,32 +100,4 @@ function selectAndSetContents(genre) {
 	if(genre == 'all')
 		$('#content-info').show(600);
 	else $('#content-info').hide(600);
-}
-
-function getContents(genre) {
-	if(genre in genreContents) {
-		$('#song-list').html(genreContents[genre]);
-		resetTooltip();
-	} else $.get('./api/v1/list.php', {
-		'genre': genre,
-		'format': 'html'
-	}, function(resp) {
-		var contents = resp.message;
-		$('#song-list').html(contents);
-		genreContents[genre] = contents;
-		resetTooltip();
-	});
-}
-
-function resetTooltip() {
-	$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
-}
-
-function getHash(fallback) {
-	var hash = window.location.hash.substring(1);
-	return hash.length == 0 ? fallback : hash;
-}
-
-String.prototype.startsWith = function(str) {
-	return this.indexOf(str) == 0;
-}
+};

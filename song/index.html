@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<title>Song Info | JPV Music Library</title>	
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300italic,300,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/style.css">
+
+		<link rel="shortcut icon" href="../_favicon.ico" type="image/x-icon" />		
+			
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	
+	<body>
+		<div id="the-navbar" class="navbar navbar-inverse navbar-fixed-top synced-bgcolor" role="navigation">
+		  <div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span id="icon-bar0" class="icon-bar"></span>
+				<span id="icon-bar1" class="icon-bar"></span>
+				<span id="icon-bar2" class="icon-bar"></span>
+			</button>
+			<span class="navbar-brand">JPV Music Library</span>
+			</div>
+			<div class="collapse navbar-collapse">
+			  <ul class="nav navbar-nav">
+				<li title="Home"><a href="..">HOME</a></li>
+				<li title="Song Info" class="active"><a href="#">SONG INFO</a></li>
+			  </ul>
+			</div><!--/.nav-collapse -->
+		  </div>
+		</div>
+		
+		<div id="contents">
+			<div id="song-info">
+				<div id="loading-doodad">
+					Loading your Song~
+					<div class="loading-subtitle">Just give me a moment, baka!</div>
+				</div>
+			</div>
+		</div>
+		<div id="player" class="synced-bgcolor"></div>
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		
+		<script src="../js/jquery.cookie.min.js"></script>
+		<script src="../js/jquery.color.min.js"></script>
+		
+		<script src="../js/jpv-common.js"></script>
+		<script src="../js/jpv-song-info.js"></script>
+	</body>
+</html>
