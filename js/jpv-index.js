@@ -1,7 +1,4 @@
 var genreContents = { };
-var loading = '';
-var currentPlaying;
-var volume = 1.0;
 
 $(function() {
 	resetTooltip();
@@ -13,41 +10,6 @@ $(function() {
 $('.nav li').click(function() {
 	$('#song-list').html(loading);
 	selectAndSetContents($(this).attr('genre'));
-});
-
-$(document).on('click', '.song-play-button', function() {
-	var dl = $(this).parent('div').find('a').attr('href');	
-	var parent = $(this).closest('.song-box');
-	var title = parent.find('.song-title').text();
-	var player = $('#player');	
-	
-	var artist = parent.find('.song-artist').text();
-	var albumArtist = parent.find('.song-artist').attr('data-original-title');
-	var displayArtist = artist;
-	if(artist != albumArtist)
-		displayArtist = artist + " / " + albumArtist;
-		
-	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio controls="controls" autoplay="autoplay"><source src="' + dl + '" type="audio/mpeg"></audio>';
-	
-	if(currentPlaying != undefined)
-		currentPlaying.animate({
-			'background-color': '#fff',
-		});
-	
-	parent.animate({
-		'background-color': '#dff',
-	});
-	currentPlaying = parent;
-	
-	player.html(audio);
-    var htmlPlayer = player.find('audio')[0];
-    htmlPlayer.volume = volume;
-    htmlPlayer.onvolumechange = function() {
-        volume = arguments[0].target.volume;
-    };
-	if(player.css('display') == 'none')
-		player.show(600);
-	resetTooltip();
 });
 
 function getContents(genre) {

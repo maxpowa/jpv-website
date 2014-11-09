@@ -8,6 +8,12 @@ const colors = {
 var setContentsStartCallback;
 var setContentsEndCallback;
 
+var loading = '';
+var currentPlaying;
+var volume = 0.5;
+
+var tintPlaying = true;
+
 function getHash(fallback) {
 	var hash = window.location.hash.substring(1);
 	return hash.length == 0 ? fallback : hash;
@@ -71,6 +77,43 @@ $(".navbar-toggle").click(function() {
 			step: applyRotation
 		});
 	}
+});
+
+$(document).on('click', '.song-play-button', function() {
+	var dl = $(this).parent('div').find('a').attr('href');	
+	var parent = $(this).closest('.song-box');
+	var title = parent.find('.song-title').text();
+	var player = $('#player');	
+	
+	var artist = parent.find('.song-artist').text();
+	var albumArtist = parent.find('.song-artist').attr('data-original-title');
+	var displayArtist = artist;
+	if(artist != albumArtist)
+		displayArtist = artist + " / " + albumArtist;
+		
+	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio controls="controls" autoplay="autoplay"><source src="' + dl + '" type="audio/mpeg"></audio>';
+	
+	if(tintPlaying) {
+		if(currentPlaying != undefined)
+			currentPlaying.animate({
+				'background-color': '#fff',
+			});
+			
+		parent.animate({
+			'background-color': '#dff',
+		});
+	}
+	currentPlaying = parent;
+	
+	player.html(audio);
+    var htmlPlayer = player.find('audio')[0];
+    htmlPlayer.volume = volume;
+    htmlPlayer.onvolumechange = function() {
+        volume = arguments[0].target.volume;
+    };
+	if(player.css('display') == 'none')
+		player.show(600);
+	resetTooltip();
 });
 
 function applyRotation(now, tween) {

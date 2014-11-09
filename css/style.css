@@ -196,6 +196,31 @@ audio {
 	color: #999;
 }
 
+.info-box {
+	height: 220px;
+}
+
+.info-box .song-button {
+	margin-top: 15px;
+	font-size: 50px;
+}
+
+.info-box hr {
+	margin: 33px 0px 6px 0px;	
+	width: 470px;
+}
+
+.song-little-info {
+	padding-top: 4px;
+	margin-left: 10px;
+	font-size: 17px;
+}
+
+.song-little-info b {
+	font-weight: 300;
+}
+
+
 /* Woo, mobile devices */
 @media screen and (max-device-width: 480px) {
 
