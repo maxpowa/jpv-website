@@ -125,6 +125,7 @@ audio {
 	font-weight: 100;
 	background-color: #fff;
 	width: 50%;
+	min-width: 610px;
 	margin: auto;
 	padding: 20px 5px 20px 4px;
 	margin-top: 15px;
@@ -151,6 +152,7 @@ audio {
 	position: absolute;
 	margin: -98px 5px 10px 110px;
 	width: 50%;
+	min-width: 600px;
 }
 
 .invalid-song {
