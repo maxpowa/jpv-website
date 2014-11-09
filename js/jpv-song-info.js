@@ -14,7 +14,7 @@ function loadSongInfo(genre, name) {
 		file: genre + '/' + name + '.mp3'
 	}, function(data) {
 		var html = '<div class="song-box info-box">';
-		html += '<div class="song-image"><img src="http://localhost/xampp/jpv/api/v1/art.php?file=' + data['filename'] + '"></div><div class="song-info">';
+		html += '<div class="song-image"><img src="../api/v1/art.php?file=' + data['filename'] + '"></div><div class="song-info">';
 		html += '<div class="song-title">' + data['title'] + '</div><br>';	
 		html += '<div class="song-artist">' + data['artist'];
 		if(data['artist'] != data['album_artist'])
