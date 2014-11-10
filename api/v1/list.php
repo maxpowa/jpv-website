@@ -102,7 +102,7 @@
 			if(empty($albumartist))
 				$albumartist = $artist;
 			if(empty($album))	
-				$album = $valid ? "$artist - $title - Single" : "x(";
+				$album = $valid ? "$title (Single)" : "x(";
 			if(empty($length))
 				$length = 'N/A';
 			
