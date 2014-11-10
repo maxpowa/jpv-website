@@ -140,9 +140,6 @@ function selectAndSetContents(genre) {
 		setContentsEndCallback(genre);
 }
 
-String.prototype.startsWith = function(str) {
-	return this.indexOf(str) == 0;
-}
 
 // Source: http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript?page=1&tab=active#tab-top
 function getParameterByName(name) {
