@@ -62,12 +62,11 @@
 			header('Content-Type: application/json');
 			$time = time();
 			$json_list = json_encode($INFO_LIST);
-			$output = "{\"status\":\"200\", \"message\":\"$json_list\"}";
 			file_put_contents($CACHED_LIST , $json_list);
 
 			if($format == 'html')
 				echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
-			else echo($output);
+			else echo($json_list);
 		}
     }
     
