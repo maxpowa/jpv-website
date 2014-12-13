@@ -6,7 +6,7 @@
     define('LIB_DIR', ROOT_DIR . 'lib/');
     define('THUMBNAIL_IMAGE_MAX_WIDTH', 70);
     define('THUMBNAIL_IMAGE_MAX_HEIGHT', 70);
-    
-	define('FALLBACK_IMAGE', ROOT_DIR . 'img/song-fallback.png');
-	define('INVALID_IMAGE', ROOT_DIR . 'img/song-invalid.png');
+
+    define('FALLBACK_IMAGE', ROOT_DIR . 'img/song-fallback.png');
+    define('INVALID_IMAGE', ROOT_DIR . 'img/song-invalid.png');
 ?>
