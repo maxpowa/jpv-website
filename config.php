@@ -4,6 +4,7 @@
     define('CACHE_DIR', ROOT_DIR . 'cache/');
     define('GETID3_DIR', ROOT_DIR . 'getid3/');
     define('LIB_DIR', ROOT_DIR . 'lib/');
+    define('TAG_DB', 'sqlite:' . CACHE_DIR . '/tag_db.sqlite');
     define('THUMBNAIL_IMAGE_MAX_WIDTH', 70);
     define('THUMBNAIL_IMAGE_MAX_HEIGHT', 70);
 

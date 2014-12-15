@@ -8,13 +8,14 @@
     //   will cause a new cache to be created.                         //
     //                                                                 //
     /////////////////////////////////////////////////////////////////////
-    
+
     require_once('config.php');
     require_once(GETID3_DIR . 'getid3.php');
-    
+
     $ART_DIR = CACHE_DIR . 'art/';
-    $TAG_DIR = CACHE_DIR . 'tags/';
-    
+
+    $PERSIST_PDO = null;
+
     /**
      * Gets art file, will return it as an image stream
      */
@@ -22,8 +23,8 @@
         global $ART_DIR;
         $FILE_MD5 = md5_file( $filename );
         $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.jpg';
-		if(!file_exists($ART_DIR))
-			mkdir($ART_DIR);
+        if(!file_exists($ART_DIR))
+            mkdir($ART_DIR);
 
         if ( file_exists( $CACHE_FILE ) ) {
             header("X-Cache: hit");
@@ -34,7 +35,7 @@
             $getID3->encoding = 'UTF-8';
             #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
             $getID3->analyze($filename);
-            
+
             if (isset($getID3->info['id3v2']['APIC'][0]['data'])) {
                 $cover = $getID3->info['id3v2']['APIC'][0]['data'];
             }
@@ -43,11 +44,11 @@
             } else {
                 $cover = null;
             }
-            
+
             if (!is_null($cover)) {
                 list($source_image_width, $source_image_height) = getimagesizefromstring($cover);
                 $img = imagecreatefromstring($cover); # Create a cache image, because it didn't exist
-                
+
                 // Resizing code - max width/height are set via config.php
                 $source_aspect_ratio = $source_image_width / $source_image_height;
                 $thumbnail_aspect_ratio = THUMBNAIL_IMAGE_MAX_WIDTH / THUMBNAIL_IMAGE_MAX_HEIGHT;
@@ -64,27 +65,33 @@
                 $thumbnail_gd_image = imagecreatetruecolor($thumbnail_image_width, $thumbnail_image_height);
                 imagecopyresampled($thumbnail_gd_image, $img, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $source_image_width, $source_image_height);
                 // Resizing code
-                
+
                 imagejpeg($thumbnail_gd_image, $CACHE_FILE); # Save the image to disk, for later retrieval
                 imagedestroy($thumbnail_gd_image); # Destroy the image object to free up mem
                 imagedestroy($img); # Destroy the image object to free up mem
                 # If GD isn't loaded, you're gonna have a bad time.
-                
+
                 return $CACHE_FILE;
             }
             return null;
         }
     }
-    
-    function get_info($filename) { 
-        global $TAG_DIR;    
-        $FILE_MD5 = md5_file( $filename );
-        $CACHE_FILE = $TAG_DIR . $FILE_MD5 . '.json';
-		if(!file_exists($TAG_DIR))
-			mkdir($TAG_DIR);
 
-        if ( file_exists( $CACHE_FILE ) ) {
-            return $CACHE_FILE ;
+    function get_info_sql($filename) {
+        global $PERSIST_PDO;
+
+        // Apparently this is faster than md5_file.
+        // Honestly, I think a potato trying to roll uphill is faster than md5_file
+        $safe_fn = escapeshellarg($filename);
+        $FILE_MD5 = explode(" ", exec("md5sum $safe_fn"))[0];
+
+        check_db();
+
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE hash = ?");
+        $sel->execute(array($FILE_MD5));
+        $result=$sel->fetch(PDO::FETCH_ASSOC);
+        if ($result !== false) {
+            return json_encode($result);
         } else {
             $getID3 = new getID3;
             $getID3->encoding = 'UTF-8';
@@ -100,26 +107,75 @@
             $sizeraw = $filetags['filesize'];
             $bitrateraw = $filetags['audio']['bitrate'];
             $len = @$filetags['playtime_string'];
-            $md5 = $FILE_MD5;
-			$href = str_replace('%2F', '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
-            
-            /** JSON response:
-            { 
-              "bitrate": "$bitrateraw",
-              "size": "$sizeraw",
-              "bitrate_mode": "$bmode",
-              "album": "$album",
-              "album_artist": "$albumartist",
-              "artist": "$artist",
-              "genre": "$genre",
-              "title": "$songname",
-              "html_page": "http://jpv.everythingisawesome.us/song/$file",
-              "download_url": "http://jpv.everythingisawesome.us/$file"
-              "status": "200",
-              "message": "request successful"
-            }**/
-            $output = "{\"filename\":\"$href\",\"md5\":\"$md5\",\"bitrate\":\"$bitrateraw\",\"size\":\"$sizeraw\",\"bitrate_mode\":\"$bmode\",\"album\":\"$album\",\"album_artist\":\"$albumartist\",\"artist\":\"$artist\",\"genre\":\"$genre\",\"title\":\"$songname\",\"length\":\"$len\",\"status\":\"200\",\"message\":\"request successful\"}" ;
-            file_put_contents( $CACHE_FILE , $output );
-            return $CACHE_FILE ;
+            $href = str_replace('%2F', '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
+
+            $ins = $PERSIST_PDO->prepare("INSERT INTO tags (hash, filename, bitrate,".
+                        " size, bitrate_mode, album, album_artist, artist, genre, genre_folder,".
+                        " title, length, href) VALUES (:hash, :filename, :bitrate, :size, :bitrate_mode,".
+                        " :album, :album_artist, :artist, :genre, :genre_folder, :title, :length, :href)");
+            $ins->bindParam(':hash', $FILE_MD5);
+            $ins->bindParam(':filename', $filename);
+            $ins->bindParam(':bitrate', $bitrateraw);
+            $ins->bindParam(':size', $sizeraw);
+            $ins->bindParam(':bitrate_mode', $bmode);
+            $ins->bindParam(':album', $album);
+            $ins->bindParam(':album_artist', $albumartist);
+            $ins->bindParam(':artist', $artist);
+            $ins->bindParam(':genre', $genre);
+            $ins->bindParam(':genre_folder', $genre);
+            $ins->bindParam(':title', $songname);
+            $ins->bindParam(':length', $len);
+            $ins->bindParam(':href', $href);
+            $ins->execute();
+
+            $sel->execute(array($FILE_MD5));
+            $result=$sel->fetch(PDO::FETCH_ASSOC);
+            return json_encode($result);
         }
+    }
+
+    // Simple func to ensure the db object is initialized
+    function check_db() {
+        global $PERSIST_PDO;
+
+        if (is_null($PERSIST_PDO)) {
+            $PERSIST_PDO = new PDO(TAG_DB);
+
+            $PERSIST_PDO->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $PERSIST_PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+
+        if (!table_exists($PERSIST_PDO, "tags"))
+        {
+            //create the table
+            $PERSIST_PDO->exec("CREATE TABLE tags (hash VARCHAR(32) PRIMARY KEY, filename TEXT,".
+            "bitrate INTEGER, size INTEGER, bitrate_mode TEXT, album TEXT, album_artist TEXT,".
+            "artist TEXT, genre TEXT, genre_folder TEXT, title TEXT, length TEXT, href TEXT)");
+        }
+    }
+
+    /**
+    * Check if a table exists in the current database.
+    *
+    * @param PDO $pdo PDO instance connected to a database.
+    * @param string $table Table to search for.
+    * @return bool TRUE if table exists, FALSE if no table found.
+    */
+    function table_exists($pdo, $table) {
+        // Try a select statement against the table
+        // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+        try {
+            $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+        } catch (Exception $e) {
+            // We got an exception == table not found
+            return FALSE;
+        }
+
+        // Result is either boolean FALSE (no table found) or PDOStatement Object (table found)
+        return $result !== FALSE;
+    }
+
+    function close_db() {
+        global $PERSIST_PDO;
+        $PERSIST_PDO = null;
     }
