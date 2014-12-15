@@ -34,7 +34,7 @@ $('#btsync-key').click(function() {
 });
 
 $('#btsync-installer').click(function() {
-	window.open('https://link.getsync.com/#f=JPV%20Media%20Folder&sz=35E8&s=P3MGCJYFIYDLHH5OTZ2IHUJK5HRXUHKS&i=CVSZIPOSYQ5MKBMPEZ5DKKRV3MVSG35VR&p=CDXRVCURLM4XKYRC4SJH4BFM7JJEMVEX', '_blank');
+	window.open('https://link.getsync.com/#f=JPV%20Media%20Folder&sz=63E8&s=P3MGCJYFIYDLHH5OTZ2IHUJK5HRXUHKS&i=CCN2KITXPEWKGQO2MLLIFSGZ2OBQPKVJZ&p=CDN4Q7AM5O24H7UOYJU5ESFEN6MA6WYM', '_blank');
 });
 
 $('#btsync-qr').click(function() {
