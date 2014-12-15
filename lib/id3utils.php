@@ -12,7 +12,7 @@
     require_once('config.php');
     require_once(GETID3_DIR . 'getid3.php');
 
-    $ART_DIR = CACHE_DIR . 'art/';
+    $ART_DIR = CACHE_DIR . 'art' . DIRECTORY_SEPARATOR;
 
     $PERSIST_PDO = null;
 
@@ -77,13 +77,43 @@
         }
     }
 
-    function get_info_sql($filename) {
+    function clear_genre($genre) {
         global $PERSIST_PDO;
+        check_db();
+        $sel=$PERSIST_PDO->prepare("DELETE FROM tags WHERE genre_folder = ? COLLATE NOCASE");
+        $sel->execute(array($genre));
+        return;
+    }
 
+    function get_genre_list($genre) {
+        global $PERSIST_PDO;
+        check_db();
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? COLLATE NOCASE");
+        $sel->execute(array($genre));
+        $result=$sel->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+    }
+
+    function get_all_list() {
+        global $PERSIST_PDO;
+        check_db();
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags");
+        $sel->execute();
+        $result=$sel->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+    }
+
+    function get_info_sql($filename) {
         // Apparently this is faster than md5_file.
         // Honestly, I think a potato trying to roll uphill is faster than md5_file
         $safe_fn = escapeshellarg($filename);
         $FILE_MD5 = explode(" ", exec("md5sum $safe_fn"))[0];
+
+        return get_info_sql_with_md5($filename, $FILE_MD5);
+    }
+
+    function get_info_sql_with_md5($filename, $FILE_MD5) {
+        global $PERSIST_PDO;
 
         check_db();
 
@@ -107,7 +137,9 @@
             $sizeraw = $filetags['filesize'];
             $bitrateraw = $filetags['audio']['bitrate'];
             $len = @$filetags['playtime_string'];
-            $href = str_replace('%2F', '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
+            $href = str_replace(array('%2F','%5C'), '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
+
+            error_log(MEDIA_DIR);
 
             $ins = $PERSIST_PDO->prepare("INSERT INTO tags (hash, filename, bitrate,".
                         " size, bitrate_mode, album, album_artist, artist, genre, genre_folder,".
@@ -122,7 +154,7 @@
             $ins->bindParam(':album_artist', $albumartist);
             $ins->bindParam(':artist', $artist);
             $ins->bindParam(':genre', $genre);
-            $ins->bindParam(':genre_folder', $genre);
+            $ins->bindParam(':genre_folder', array_filter(explode('/', $href))[0]);
             $ins->bindParam(':title', $songname);
             $ins->bindParam(':length', $len);
             $ins->bindParam(':href', $href);
