@@ -48,6 +48,7 @@
             $INFO_LIST = get_genre_list($genre);
         }
 
+        header('Content-Type: application/json');
         if($format == 'html')
             echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
         else echo($INFO_LIST);
@@ -114,7 +115,6 @@
             $html .= "<div class='$classes'><div class='song-image' data-toggle='tooltip' title='$album'><img src='$image'></img></div><div class='song-info'><div class='song-title'>$title</div><br><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br><div class='song-length'>$length</div><br>$buttons</div></div>";
         }
 
-        header('Content-Type: application/json');
         return "{\"status\":\"200\", \"message\":\"$html\"}";
     }
 
