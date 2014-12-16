@@ -139,8 +139,6 @@
             $len = @$filetags['playtime_string'];
             $href = str_replace(array('%2F','%5C'), '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
 
-            error_log(MEDIA_DIR);
-
             $ins = $PERSIST_PDO->prepare("INSERT INTO tags (hash, filename, bitrate,".
                         " size, bitrate_mode, album, album_artist, artist, genre, genre_folder,".
                         " title, length, href) VALUES (:hash, :filename, :bitrate, :size, :bitrate_mode,".
