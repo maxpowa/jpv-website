@@ -1,4 +1,4 @@
-### Beta site to replace http://jpv.everythingisawesome.us/
+### Repository of http://jpv.everythingisawesome.us/
 
 [Test Site](http://test.everythingisawesome.us) (updated whenever Vazkii or maxpowa are around)
 
