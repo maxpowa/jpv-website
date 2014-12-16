@@ -25,10 +25,8 @@
     } else
         error('400', 'Bad Request', '\'genre\' parameter not provided.');
 
-    $INFO_LIST = array();
 
     function get_genre_tracks($genre) {
-        global $INFO_LIST;
         global $format;
 
         if($genre != 'all') {
@@ -44,30 +42,15 @@
                 error('400', 'Bad Request', '\'genre\' parameter (\'' . $genre . '\') is invalid.');
         }
 
-        $CACHED_LIST = CACHE_DIR . $genre . '.json';
-        if (file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST , 3600)) {
-            header("Status-Code: 200");
-            header('Content-Type: application/json');
-
-            if($format == 'html')
-                echo(get_jpv_html(json_decode(file_get_contents($CACHED_LIST), true), 'From CACHED_LIST'));
-            else {
-                $size = filesize($CACHED_LIST);
-                header("Content-Length: $size");
-                readfile($CACHED_LIST);
-            }
-            return;
+        if ($genre == 'all' || $genre == '*') {
+            $INFO_LIST = get_all_list();
         } else {
-            iterate_dir(MEDIA_DIR . ($genre == 'all' ? '' : $genre));
-            header('Content-Type: application/json');
-            $time = time();
-            $json_list = json_encode($INFO_LIST);
-            file_put_contents($CACHED_LIST , $json_list);
-
-            if($format == 'html')
-                echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
-            else echo($json_list);
+            $INFO_LIST = get_genre_list($genre);
         }
+
+        if($format == 'html')
+            echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
+        else echo($INFO_LIST);
     }
 
     function encode_entities($string) {
@@ -80,7 +63,9 @@
 
         $html = '';
 
-        foreach($list as $song_data) {
+        $json_list[] = json_decode($list, true);
+
+        foreach($json_list[0] as $song_data) {
             $title = encode_entities($song_data['title']);
             $artist = encode_entities($song_data['artist']);
             $albumartist = encode_entities($song_data['album_artist']);
@@ -129,6 +114,7 @@
             $html .= "<div class='$classes'><div class='song-image' data-toggle='tooltip' title='$album'><img src='$image'></img></div><div class='song-info'><div class='song-title'>$title</div><br><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br><div class='song-length'>$length</div><br>$buttons</div></div>";
         }
 
+        header('Content-Type: application/json');
         return "{\"status\":\"200\", \"message\":\"$html\"}";
     }
 
@@ -137,59 +123,4 @@
             header('Content-Type: application/json');
             echo('{"status":"' . $status . '", "message":"<div class=\'song-box invalid-song\'><div class=\'song-image\'><img src=\"./img/error.jpg\"></img></div><div class=\'song-info\'><div class=\'song-title\'>HTTP ' . $status . ': ' . $errorstr . '</div><br><div class=\'song-artist\'>' . $message . '</div></div></div>"}');
             exit;
-    }
-
-    function cache_check($genre) {
-        global $INFO_LIST;
-        $CACHED_LIST = CACHE_DIR . $genre . '.json';
-        if(file_exists($CACHED_LIST) && !check_file_age($CACHED_LIST, 3600)) {
-            header("Status-Code: 200");
-            header('Content-Type: application/json');
-            $size = filesize($CACHED_LIST);
-            header("Content-Length: $size");
-            readfile($CACHED_LIST);
-            return;
-        } else {
-            iterate_dir( MEDIA_DIR . $genre );
-            header('Content-Type: application/json');
-            $time = time();
-            $output = "{\"last-modified\":\"$time\",\"songs\":".json_encode($INFO_LIST).'}';
-            echo($output);
-            file_put_contents($CACHED_LIST , $output);
-        }
-    }
-
-    /**
-     *
-     * Check file age, return true if older than $age (seconds), false otherwise
-     *
-     */
-    function check_file_age($file, $age) {
-        return (time() - filemtime($file) >= $age);
-    }
-
-    function iterate_dir($dir) {
-        if(!file_exists($dir) or !is_dir($dir))
-            return;
-
-        if(strpos($dir,'.sync') != 0)
-            return;
-
-        $files = scandir($dir);
-        sort($files);
-        foreach($files as $file) {
-            if(strlen($file) > 2 && ((strpos($file, '.mp3') != 0 && strpos($file, '!sync') == 0) || strpos($file, '.') == 0)) {
-                $href = "$dir/$file";
-                if(strpos($file, '.') == 0)
-                    iterate_dir($href);
-                else build_json($file, str_replace(MEDIA_DIR , '' , $href));
-            }
-        }
-        close_db();
-    }
-
-    function build_json($filename, $rel_path) {
-        global $INFO_LIST;
-        $INFO_FILE = get_info_sql(MEDIA_DIR . $rel_path);
-        $INFO_LIST[] = json_decode($INFO_FILE, true);
     }
