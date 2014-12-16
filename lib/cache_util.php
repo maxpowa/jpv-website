@@ -94,6 +94,18 @@
         return json_encode($result);
     }
 
+    function search_db($query) {
+        global $PERSIST_PDO;
+        check_db();
+        $query = "%".$query."%";
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE artist LIKE :query OR".
+                " album_artist LIKE :query OR album LIKE :query OR title LIKE :query COLLATE NOCASE");
+        $sel->bindParam(':query', $query);
+        $sel->execute();
+        $result=$sel->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($result);
+    }
+
     function get_all_list() {
         global $PERSIST_PDO;
         check_db();
