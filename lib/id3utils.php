@@ -33,7 +33,7 @@
             header("X-Cache: miss");
             $getID3 = new getID3;
             $getID3->encoding = 'UTF-8';
-            #$getID3->option_tag_id3v2 = true; # We don't /need/ to force tags to be id3v2
+            $getID3->option_tag_id3v2 = true; # We need to force the tags to id3v2, because we are pulling pic data from that tag type
             $getID3->analyze($filename);
 
             if (isset($getID3->info['id3v2']['APIC'][0]['data'])) {
