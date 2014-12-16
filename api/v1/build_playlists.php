@@ -21,8 +21,10 @@
         $current_list = "# $comment";
 
         echo("Building $name...");
-        echo("Clearing sql where genre_folder = $sql_column");
-        clear_genre($sql_column);
+        if ($sql_column != null && $sql_column != "") {
+            echo("Clearing sql where genre_folder = $sql_column");
+            clear_genre($sql_column);
+        }
 
         foreach($inclusions as $file) {
             if(strpos($file, '.mp3') != 0) {
