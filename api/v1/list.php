@@ -11,7 +11,7 @@
     /////////////////////////////////////////////////////////////////////
 
     require_once('config.php');
-    require_once(LIB_DIR . 'id3utils.php');
+    require_once(LIB_DIR . 'cache_util.php');
 
     $format = 'json';
     if(isset($_GET['format']))

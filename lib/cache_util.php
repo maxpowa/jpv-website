@@ -1,7 +1,7 @@
 <?php
     /////////////////////////////////////////////////////////////////////
     //                                                                 //
-    // id3utils.php - does the heavy lifting for the endpoints         //
+    // cache_util.php - does the heavy lifting for the endpoints       //
     //                                                                 //
     // Requires PHP5-GD for image caching                              //
     //   Caching uses MD5 as the identifier, so any change to a file   //

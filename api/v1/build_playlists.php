@@ -1,6 +1,6 @@
 <?php
     require_once('config.php');
-    require_once(LIB_DIR . 'id3utils.php');
+    require_once(LIB_DIR . 'cache_util.php');
 
     $PLAYLISTS_JSON = MEDIA_DIR . 'playlists.json';
     if(!file_exists($PLAYLISTS_JSON)) {
