@@ -48,6 +48,7 @@
             $INFO_LIST = get_genre_list($genre);
         }
 
+        header("Cache-Control: max-age=86400");
         header('Content-Type: application/json');
         if($format == 'html')
             echo(get_jpv_html($INFO_LIST, 'From INFO_LIST'));
@@ -121,6 +122,7 @@
     function error($status, $errorstr, $message) {
             header("Status-Code: $status");
             header('Content-Type: application/json');
+            header("Cache-Control: max-age=86400");
             echo('{"status":"' . $status . '", "message":"<div class=\'song-box invalid-song\'><div class=\'song-image\'><img src=\"./img/error.jpg\"></img></div><div class=\'song-info\'><div class=\'song-title\'>HTTP ' . $status . ': ' . $errorstr . '</div><br><div class=\'song-artist\'>' . $message . '</div></div></div>"}');
             exit;
     }
