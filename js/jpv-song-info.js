@@ -35,8 +35,9 @@ function loadSongInfo(genre, name) {
         document.title = data['artist'] + ' - ' + data['title'] + ' | Song Info | JPV Music Library';
         
         var autoplay = getParameterByName('autoplay');
-        if (getBool(autoplay)) 
+        if (getBool(autoplay)) {
             var playBtn = $(document.getElementsByClassName('song-play-button')[0]);
             showPlayerFrom(playBtn);
+        }
     });
 }
