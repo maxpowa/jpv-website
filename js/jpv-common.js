@@ -79,7 +79,7 @@ $(".navbar-toggle").click(function() {
 	}
 });
 
-$(document).on('click', '.song-play-button', function() {
+function showPlayer() {
 	var dl = $(this).parent('div').find('a').attr('href');	
 	var parent = $(this).closest('.song-box');
 	var title = parent.find('.song-title').text();
@@ -91,7 +91,7 @@ $(document).on('click', '.song-play-button', function() {
 	if(artist != albumArtist)
 		displayArtist = artist + " / " + albumArtist;
 		
-	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio controls="controls" autoplay="autoplay"><source src="' + dl + '" type="audio/mpeg"></audio>';
+	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio autoplay controls="controls" autoplay="autoplay"><source src="' + dl + '" type="audio/mpeg"></audio>';
 	
 	if(tintPlaying) {
 		if(currentPlaying != undefined)
@@ -114,7 +114,9 @@ $(document).on('click', '.song-play-button', function() {
 	if(player.css('display') == 'none')
 		player.show(600);
 	resetTooltip();
-});
+}
+
+$(document).on('click', '.song-play-button', showPlayer);
 
 function applyRotation(now, tween) {
 	if(tween.prop == "textIndent")

@@ -2,8 +2,10 @@ $(function() {
     resetTooltip();
     var genre = getParameterByName('genre');
     var song = getParameterByName('song');
+    var autoplay = getParameterByName('autoplay');
     selectAndSetContents(genre);
     loadSongInfo(genre, song);
+    if (Boolean(autoplay)) showPlayer();
     resetTooltip();
 
     tintPlaying = false;
