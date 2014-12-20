@@ -21,7 +21,12 @@
      */
     function get_art($filename) {
         global $ART_DIR;
-        $FILE_MD5 = md5_file( $filename );
+        
+        // Apparently this is faster than md5_file.
+        // Honestly, I think a potato trying to roll uphill is faster than md5_file
+        $safe_fn = escapeshellarg($filename);
+        $FILE_MD5 = explode(" ", exec("md5sum $safe_fn"))[0];
+        
         $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.jpg';
         if(!file_exists($ART_DIR))
             mkdir($ART_DIR);
