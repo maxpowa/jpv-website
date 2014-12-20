@@ -2,10 +2,8 @@ $(function() {
     resetTooltip();
     var genre = getParameterByName('genre');
     var song = getParameterByName('song');
-    var autoplay = getParameterByName('autoplay');
     selectAndSetContents(genre);
     loadSongInfo(genre, song);
-    if (Boolean(autoplay)) showPlayer();
     resetTooltip();
 
     tintPlaying = false;
@@ -30,5 +28,10 @@ function loadSongInfo(genre, name) {
 
         $('#song-info').html(html);
         document.title = data['artist'] + ' - ' + data['title'] + ' | Song Info | JPV Music Library';
+        
+        var autoplay = getParameterByName('autoplay');
+        if (Boolean(autoplay)) 
+            var playBtn = $(document.getElementsByClassName('song-play-button')[0]);
+            showPlayerFrom(playBtn);
     });
 }
