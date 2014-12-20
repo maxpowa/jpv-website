@@ -22,12 +22,9 @@
 	if(file_exists($filename) && is_file($filename)) {
         $FILE = get_art($filename);
         if(!is_null($FILE)) {
-            header("Content-type: image/jpeg");
-            header("Status-Code: 200");
-            $size = filesize($FILE);
-            header("Content-Length: $size");
-            readfile($FILE);
-            return;
+            $img = str_replace( ROOT_DIR, "", $FILE );
+            header("Cache-Control: max-age=604800");
+            redirect("http://".$_SERVER['HTTP_HOST']."/$img", true);
         }
     }
 
@@ -42,9 +39,7 @@
 	}
 
 	function fallbackTo($img) {
-	    header("Content-Type: image/png");
-        header("Status-Code: 400");
-        header("Content-Length: " . filesize($img));
-		echo file_get_contents($img);
-		exit;
+        $img = str_replace( ROOT_DIR, "", $img );
+        header("Cache-Control: max-age=86400");
+		redirect("http://".$_SERVER['HTTP_HOST']."/$img", false);
 	}

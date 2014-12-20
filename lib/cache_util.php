@@ -221,3 +221,8 @@
         global $PERSIST_PDO;
         $PERSIST_PDO = null;
     }
+    
+    function redirect($url, $permanent = false) {
+        header('Location: ' . $url, true, $permanent ? 301 : 302);
+        die();
+    }
