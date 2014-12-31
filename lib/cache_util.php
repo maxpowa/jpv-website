@@ -93,7 +93,7 @@
     function get_genre_list($genre) {
         global $PERSIST_PDO;
         check_db();
-        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? ORDER BY artist, title ASC COLLATE NOCASE");
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? COLLATE NOCASE ORDER BY artist, title ASC");
         $sel->execute(array($genre));
         $result=$sel->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
