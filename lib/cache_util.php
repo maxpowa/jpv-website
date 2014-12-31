@@ -93,7 +93,7 @@
     function get_genre_list($genre) {
         global $PERSIST_PDO;
         check_db();
-        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? COLLATE NOCASE");
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? ORDER BY artist, title ASC COLLATE NOCASE");
         $sel->execute(array($genre));
         $result=$sel->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
@@ -125,7 +125,7 @@
         check_db();
         $query = "%".$query."%";
         $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE artist LIKE :query OR".
-                " album_artist LIKE :query OR album LIKE :query OR title LIKE :query COLLATE NOCASE");
+                " album_artist LIKE :query OR album LIKE :query OR title LIKE :query COLLATE NOCASE ORDER BY artist, title ASC");
         $sel->bindParam(':query', $query);
         $sel->execute();
         $result=$sel->fetchAll(PDO::FETCH_ASSOC);
@@ -135,7 +135,7 @@
     function get_all_list() {
         global $PERSIST_PDO;
         check_db();
-        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags");
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags ORDER BY artist, title ASC");
         $sel->execute();
         $result=$sel->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($result);
