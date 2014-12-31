@@ -21,12 +21,12 @@
      */
     function get_art($filename) {
         global $ART_DIR;
-        
+
         // Apparently this is faster than md5_file.
         // Honestly, I think a potato trying to roll uphill is faster than md5_file
         $safe_fn = escapeshellarg($filename);
         $FILE_MD5 = explode(" ", exec("md5sum $safe_fn"))[0];
-        
+
         $CACHE_FILE = $ART_DIR . $FILE_MD5 . '.jpg';
         if(!file_exists($ART_DIR))
             mkdir($ART_DIR);
@@ -99,6 +99,27 @@
         return json_encode($result);
     }
 
+    function get_file_list($genre) {
+        global $PERSIST_PDO;
+        check_db();
+        $sel=$PERSIST_PDO->prepare("SELECT * FROM tags WHERE genre_folder = ? COLLATE NOCASE");
+        $sel->execute(array($genre));
+        $sel->bindColumn('filename', $file);
+        $files = array();
+        while ($row = $sel->fetch(PDO::FETCH_BOUND)) {
+            $files[] = $file;
+        }
+        return $files;
+    }
+
+    function remove_by_filename($filename, $genre) {
+        global $PERSIST_PDO;
+        check_db();
+        $sel=$PERSIST_PDO->prepare("DELETE FROM tags WHERE genre_folder = ? AND filename = ? COLLATE NOCASE");
+        $sel->execute(array($genre, $filename));
+        return;
+    }
+
     function search_db($query) {
         global $PERSIST_PDO;
         check_db();
@@ -156,7 +177,7 @@
             $len = @$filetags['playtime_string'];
             $href = str_replace(array('%2F','%5C'), '/', rawurlencode(str_replace(MEDIA_DIR, '', $filename)));
 
-            $ins = $PERSIST_PDO->prepare("INSERT INTO tags (hash, filename, bitrate,".
+            $ins = $PERSIST_PDO->prepare("INSERT OR REPLACE INTO tags (hash, filename, bitrate,".
                         " size, bitrate_mode, album, album_artist, artist, genre, genre_folder,".
                         " title, length, href) VALUES (:hash, :filename, :bitrate, :size, :bitrate_mode,".
                         " :album, :album_artist, :artist, :genre, :genre_folder, :title, :length, :href)");
@@ -226,7 +247,7 @@
         global $PERSIST_PDO;
         $PERSIST_PDO = null;
     }
-    
+
     function redirect($url, $permanent = false) {
         header('Location: ' . $url, true, $permanent ? 301 : 302);
         die();

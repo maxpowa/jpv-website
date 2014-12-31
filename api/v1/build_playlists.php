@@ -2,6 +2,8 @@
     require_once('config.php');
     require_once(LIB_DIR . 'cache_util.php');
 
+    header("Content-Type: text/plain");
+
     $PLAYLISTS_JSON = MEDIA_DIR . 'playlists.json';
     if(!file_exists($PLAYLISTS_JSON)) {
         echo('playlists.json is not present!');
@@ -20,10 +22,16 @@
         $exclusions = $playlist_array['exclude'];
         $current_list = "# $comment";
 
-        echo("Building $name...");
+        echo("Building $name...\n");
         if ($sql_column != null && $sql_column != "") {
-            echo("Clearing sql where genre_folder = $sql_column");
-            clear_genre($sql_column);
+            echo("Checking files in $sql_column\n");
+            $files = get_file_list($sql_column);
+            foreach ($files as $file) {
+                if (!(file_exists($file))) {
+                    remove_by_filename($file, $sql_column);
+                    echo("Removing $file\n");
+                }
+            }
         }
 
         foreach($inclusions as $file) {
@@ -33,11 +41,11 @@
         }
         $existing = file_get_contents(MEDIA_DIR . $name);
         if (strcmp($existing, $current_list) == 0) {
-            echo("Skipped. (UP-TO-DATE)<br />");
+            echo("Skipped playlist addition. (UP-TO-DATE)\n");
             return;
         }
         file_put_contents(MEDIA_DIR . $name, $current_list);
-        echo("<br />");
+        echo("\n");
     }
 
     function iterate_dir($dir, $current_list, $exclusions) {
@@ -63,7 +71,7 @@
                 } else $current_list .= "\n$playlist_line";
 
                 $fn = realpath(MEDIA_DIR . $playlist_line);
-                echo("Generating file info for $fn");
+                echo("Generating file info for $fn\n");
                 $safe_fn = escapeshellarg($fn);
                 $safe_songphp = escapeshellarg(ROOT_DIR . "api/v1/song.php");
                 popen("php $safe_songphp $safe_fn", 'r');
