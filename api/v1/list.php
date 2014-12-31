@@ -102,16 +102,22 @@
             $info_loc = str_replace('+', ' ', $info_loc);
 
             $image = "./api/v1/art.php?file=$filename";
+            $md5 = $song_data['hash'];
+            $md5 = preg_replace("/[^A-Za-z0-9 ]/", '', $md5);
+
+            if (file_exists(CACHE_DIR . 'art' . DIRECTORY_SEPARATOR . $md5 . '.jpg')) {
+                $image = "./cache/art/$md5.jpg";
+            }
+
             $classes = 'song-box';
             $buttons = "<div class='song-buttons'><div class='song-button song-play-button glyphicon glyphicon-play-circle' target='_blank' data-toggle='tooltip' title='Play'></div><a href='./media/$filename' download target='_blank' data-toggle='tooltip' title='Download'><div class='song-button song-download-button glyphicon glyphicon-download'></div></a><a href='./song/?genre=$genre&song=$info_loc' target='_blank' data-toggle='tooltip' title='Song Info'><div class='song-button  glyphicon glyphicon-info-sign'></div></a></div>";
 
-            if(!$valid)    {
+            if(!$valid) {
                 $image = "./api/v1/art.php?file=invalid";
                 $buttons = '';
                 $classes .= ' invalid-song';
                 $albumartist = 'Whatcha looking at?';
             }
-
 
             $html .= "<div class='$classes'><div class='song-image' data-toggle='tooltip' title='$album'><img src='$image'></img></div><div class='song-info'><div class='song-title'>$title</div><br><div class='song-artist' data-toggle='tooltip' title='$albumartist'>$artist</div><br><div class='song-length'>$length</div><br>$buttons</div></div>";
         }
