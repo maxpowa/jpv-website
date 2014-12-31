@@ -79,9 +79,13 @@ $(".navbar-toggle").click(function() {
 	}
 });
 
-$(document).on('click', '.song-play-button', function() {
-	var dl = $(this).parent('div').find('a').attr('href');	
-	var parent = $(this).closest('.song-box');
+function showPlayer() {
+    return showPlayerFrom(this);
+}
+
+function showPlayerFrom(element) {
+	var dl = $(element).parent('div').find('a').attr('href');	
+	var parent = $(element).closest('.song-box');
 	var title = parent.find('.song-title').text();
 	var player = $('#player');	
 	
@@ -91,7 +95,7 @@ $(document).on('click', '.song-play-button', function() {
 	if(artist != albumArtist)
 		displayArtist = artist + " / " + albumArtist;
 		
-	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio controls="controls" autoplay="autoplay"><source src="' + dl + '" type="audio/mpeg"></audio>';
+	var audio = '<span class="player-song-name" data-toggle="tooltip" title="' + displayArtist + '">' + title + '</span><br><audio autoplay controls="controls" autoplay="autoplay" autostart="1"><source src="' + dl + '" type="audio/mpeg"></audio>';
 	
 	if(tintPlaying) {
 		if(currentPlaying != undefined)
@@ -111,10 +115,13 @@ $(document).on('click', '.song-play-button', function() {
     htmlPlayer.onvolumechange = function() {
         volume = arguments[0].target.volume;
     };
+    htmlPlayer.play();
 	if(player.css('display') == 'none')
 		player.show(600);
 	resetTooltip();
-});
+}
+
+$(document).on('click', '.song-play-button', showPlayer);
 
 function applyRotation(now, tween) {
 	if(tween.prop == "textIndent")
