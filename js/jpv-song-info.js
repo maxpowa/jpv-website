@@ -9,14 +9,15 @@ $(function() {
     tintPlaying = false;
 });
 
-function getBool(val){ 
+function getBool(val){
     var num = +val;
     return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0,'');
 }
 
 function loadSongInfo(genre, name) {
+    if (name.indexOf('.mp3') < 0) name += '.mp3';
     $.get('../api/v1/song.php', $.param({
-        file: name + '.mp3'
+        file: name
     }), function(data) {
         var html = '<div class="song-box info-box">';
         html += '<div class="song-image"><img src="../api/v1/art.php?file=' + data['href'] + '"></div><div class="song-info">';
@@ -33,7 +34,7 @@ function loadSongInfo(genre, name) {
 
         $('#song-info').html(html);
         document.title = data['artist'] + ' - ' + data['title'] + ' | Song Info | JPV Music Library';
-        
+
         var autoplay = getParameterByName('autoplay');
         if (getBool(autoplay)) {
             var playBtn = $(document.getElementsByClassName('song-play-button')[0]);
