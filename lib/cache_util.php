@@ -216,7 +216,7 @@
         if (!table_exists($PERSIST_PDO, "tags"))
         {
             //create the table
-            $PERSIST_PDO->exec("CREATE TABLE tags (hash VARCHAR(32) PRIMARY KEY, filename TEXT,".
+            $PERSIST_PDO->exec("CREATE TABLE tags (hash VARCHAR(32) PRIMARY KEY, filename TEXT UNIQUE,".
             "bitrate INTEGER, size INTEGER, bitrate_mode TEXT, album TEXT, album_artist TEXT,".
             "artist TEXT, genre TEXT, genre_folder TEXT, title TEXT, length TEXT, href TEXT)");
         }
