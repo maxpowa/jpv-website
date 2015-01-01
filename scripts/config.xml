@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+    Config for google sitemap_gen.py 
+    If running your own version, change the relevant paths to your own
+-->
+
+<site
+  base_url="http://jpv.everythingisawesome.us/"
+  store_into="/jpv_testing/sitemap.xml.gz"
+  verbose="1" >
+  
+  <url
+     href="http://jpv.everythingisawesome.us/"
+     changefreq="daily"
+     priority="1"
+  />
+
+  <url
+     href="http://jpv.everythingisawesome.us/report.html"
+     changefreq="daily"
+     priority="0.1"
+  />
+
+  <urllist  path="/jpv_testing/scripts/url_list.txt"  encoding="UTF-8"  />
+
+</site>
