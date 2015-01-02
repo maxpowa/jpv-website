@@ -4,7 +4,7 @@
     //                                                                 //
     // Request Scheme:                                                 //
     //   GET /api/v1/list.php?genre={genre}(&format={format})          //
-    //   {genre} is a folder in MEDIA_DIR                               //
+    //   {genre} is a folder in MEDIA_DIR                              //
     //   {format} is the format to respond on, json or html            //
     // Response:                                                       //
     //   JSON/HTML list of all songs for that genre                    //

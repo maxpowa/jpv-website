@@ -99,6 +99,20 @@
         return json_encode($result);
     }
 
+    function get_genre_count($genre) {
+        global $PERSIST_PDO;
+        check_db();
+        if ($genre === "all") {
+            $sth=$PERSIST_PDO->prepare("SELECT COUNT(*) FROM tags");
+            $sth->execute();
+        } else {
+            $sth=$PERSIST_PDO->prepare("SELECT COUNT(*) FROM tags WHERE genre_folder = ?");
+            $sth->execute(array($genre));
+        }
+        $rows = $sth->fetch(PDO::FETCH_NUM);
+        return $rows[0];
+    }
+
     function get_file_list($genre) {
         global $PERSIST_PDO;
         check_db();
