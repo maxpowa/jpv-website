@@ -27,7 +27,7 @@
             header("Content-Type: text/html");
             $nekos = "";
             foreach(str_split($count) as $num)
-                $nekos .= "<img src='/img/counter/$num.gif'></img>";
+                $nekos .= "<img src='/img/counter/$num.gif' alt='$num'></img>";
             $nekos .= "<br /> $genre songs and counting!";
             print($nekos);
             die();
