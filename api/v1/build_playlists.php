@@ -58,7 +58,7 @@
         $files = scandir($dir);
         sort($files);
         foreach($files as $file) {
-            if(strlen($file) > 2 && ((strpos($file, '.mp3') != 0 && strpos($file, '!sync') == 0) || strpos($file, '.') == 0)) {
+            if(strlen($file) > 2 && ((strpos($file, '.mp3') != 0 && strpos($file, '!sync') == 0) && strpos($file, '.SyncOld') == 0) || strpos($file, '.') == 0)) {
                 $href = "$dir/$file";
                 $playlist_line = substr($href, strlen(MEDIA_DIR));
 
