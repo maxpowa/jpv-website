@@ -9,6 +9,7 @@ config.media = {};
 config.web = {};
 
 config.media.regex = /\.mp3$/; // Uses javascript regex format
+config.media.exclude = /^.sync/;
 config.media.root = __dirname;
 config.media.dir = __dirname+'/media/';
 config.media.cache = __dirname+'/cache/';
