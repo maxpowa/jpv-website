@@ -1,14 +1,11 @@
-FROM php:5-fpm
+FROM octohost/php5:5.5
 
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng12-dev \
-        php-getid3 \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+RUN apt-get update && apt-get install -y php-getid3
 
-COPY . /var/www/html
-WORKDIR /var/www/html
+ADD . /srv/www
+WORKDIR /srv/www
 
-VOLUME ["/var/www/html/media","/var/www/html/cache"]
+EXPOSE 80
+
+# Remember how you're not supposed to start services in docker containers? too late.
+CMD service php5-fpm start && nginx
