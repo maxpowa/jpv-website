@@ -10,3 +10,5 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /var/www/html
 WORKDIR /var/www/html
+
+VOLUME ["/var/www/html/media","/var/www/html/cache"]
